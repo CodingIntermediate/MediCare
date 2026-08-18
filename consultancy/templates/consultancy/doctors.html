@@ -1,0 +1,383 @@
+{% extends "consultancy/base.html" %}
+
+
+{% block title %}
+    Doctors
+{% endblock %}
+
+
+{% block navigation %}
+
+<a href="{% url 'patient_dashboard' %}">
+
+    <i class="fa-solid fa-house"></i>
+
+    <span>
+        Dashboard
+    </span>
+
+</a>
+
+
+<a
+    class="active"
+    href="{% url 'doctor_categories' %}"
+>
+
+    <i class="fa-solid fa-user-doctor"></i>
+
+    <span>
+        Find a Doctor
+    </span>
+
+</a>
+
+
+<a href="{% url 'my_bookings' %}">
+
+    <i class="fa-solid fa-calendar-check"></i>
+
+    <span>
+        My Bookings
+    </span>
+
+</a>
+
+{% endblock %}
+
+
+{% block navigation_bottom %}
+
+<a href="{% url 'patient_logout' %}">
+
+    <i class="fa-solid fa-right-from-bracket"></i>
+
+    <span>
+        Logout
+    </span>
+
+</a>
+
+{% endblock %}
+
+
+{% block header %}
+
+<div class="user-area">
+
+    <div class="user-avatar">
+
+        <i class="fa-solid fa-user"></i>
+
+    </div>
+
+    <span class="user-name">
+
+        Find a Doctor
+
+    </span>
+
+</div>
+
+{% endblock %}
+
+
+{% block content %}
+
+
+<!-- =====================================
+     PAGE HEADING
+===================================== -->
+
+<section class="page-heading">
+
+    <span class="heading-label">
+
+        SPECIALISTS
+
+    </span>
+
+
+    <h1>
+
+        Choose Your Doctor
+
+    </h1>
+
+
+    <p>
+
+        Select an experienced specialist
+        for your consultation.
+
+    </p>
+
+</section>
+
+
+
+<!-- =====================================
+     DOCTOR INFORMATION BAR
+===================================== -->
+
+<section class="doctor-list-toolbar glass">
+
+
+    <div class="toolbar-icon">
+
+        <i class="fa-solid fa-user-doctor"></i>
+
+    </div>
+
+
+    <div>
+
+        <h3>
+
+            Available Specialists
+
+        </h3>
+
+
+        <p>
+
+            Choose a doctor to view their
+            available appointment slots.
+
+        </p>
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =====================================
+     DOCTOR GRID
+===================================== -->
+
+<section class="doctor-grid">
+
+
+{% for doctor in doctors %}
+
+
+<article class="doctor-card glass">
+
+
+    <!-- TOP -->
+
+    <div class="doctor-card-top">
+
+
+        <div class="doctor-avatar-large">
+
+            <i class="fa-solid fa-user-doctor"></i>
+
+        </div>
+
+
+        <div class="doctor-availability">
+
+            <span class="availability-dot"></span>
+
+            Available
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- DOCTOR NAME -->
+
+    <div class="doctor-heading">
+
+        <h2>
+
+            Dr. {{ doctor.user.name }}
+
+        </h2>
+
+
+        <span>
+
+            {{ doctor.category.name }}
+
+        </span>
+
+    </div>
+
+
+
+    <!-- DETAILS -->
+
+    <div class="doctor-details">
+
+
+        <div class="doctor-detail">
+
+            <div class="detail-icon">
+
+                <i class="fa-solid fa-graduation-cap"></i>
+
+            </div>
+
+
+            <div>
+
+                <small>
+                    Qualification
+                </small>
+
+                <strong>
+
+                    {{ doctor.qualification }}
+
+                </strong>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="doctor-detail">
+
+            <div class="detail-icon">
+
+                <i class="fa-solid fa-briefcase"></i>
+
+            </div>
+
+
+            <div>
+
+                <small>
+                    Experience
+                </small>
+
+                <strong>
+
+                    {{ doctor.experience }}
+                    years
+
+                </strong>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- ABOUT -->
+
+    {% if doctor.about %}
+
+    <p class="doctor-about">
+
+        {{ doctor.about|truncatewords:18 }}
+
+    </p>
+
+    {% endif %}
+
+
+
+    <!-- BOTTOM -->
+
+    <div class="doctor-card-bottom">
+
+
+        <div class="doctor-fee">
+
+            <small>
+                Consultation fee
+            </small>
+
+            <strong>
+
+                ₹{{ doctor.consultation_fee }}
+
+            </strong>
+
+        </div>
+
+
+        <a
+            href="{% url 'doctor_slots' doctor.id %}"
+            class="doctor-button"
+        >
+
+            View Availability
+
+            <i class="fa-solid fa-arrow-right"></i>
+
+        </a>
+
+
+    </div>
+
+
+</article>
+
+
+{% empty %}
+
+
+<!-- =====================================
+     EMPTY STATE
+===================================== -->
+
+<div class="doctor-empty glass">
+
+
+    <div class="empty-icon">
+
+        <i class="fa-solid fa-user-doctor"></i>
+
+    </div>
+
+
+    <h2>
+
+        No doctors available
+
+    </h2>
+
+
+    <p>
+
+        There are currently no approved doctors
+        available in this category.
+
+    </p>
+
+
+    <a
+        href="{% url 'doctor_categories' %}"
+        class="back-button"
+    >
+
+        <i class="fa-solid fa-arrow-left"></i>
+
+        Back to Categories
+
+    </a>
+
+
+</div>
+
+
+{% endfor %}
+
+
+</section>
+
+
+{% endblock %}

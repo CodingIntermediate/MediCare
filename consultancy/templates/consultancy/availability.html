@@ -1,0 +1,528 @@
+{% extends "consultancy/base.html" %}
+
+
+{% block title %}
+    Availability
+{% endblock %}
+
+
+{% block navigation %}
+
+<a href="{% url 'doctor_dashboard' %}">
+
+    <i class="fa-solid fa-house"></i>
+
+    <span>
+        Dashboard
+    </span>
+
+</a>
+
+
+<a href="{% url 'doctor_slots_list' %}">
+
+    <i class="fa-solid fa-calendar-days"></i>
+
+    <span>
+        My Slots
+    </span>
+
+</a>
+
+
+<a href="{% url 'doctor_bookings' %}">
+
+    <i class="fa-solid fa-users"></i>
+
+    <span>
+        Patient Bookings
+    </span>
+
+</a>
+
+
+<a href="{% url 'doctor_profile' %}">
+
+    <i class="fa-solid fa-user-doctor"></i>
+
+    <span>
+        My Profile
+    </span>
+
+</a>
+
+{% endblock %}
+
+
+{% block navigation_bottom %}
+
+<a
+    class="active"
+    href="{% url 'doctor_availability' %}"
+>
+
+    <i class="fa-solid fa-clock"></i>
+
+    <span>
+        Availability
+    </span>
+
+</a>
+
+
+<a href="{% url 'doctor_logout' %}">
+
+    <i class="fa-solid fa-right-from-bracket"></i>
+
+    <span>
+        Logout
+    </span>
+
+</a>
+
+{% endblock %}
+
+
+{% block header %}
+
+<div class="doctor-user-area">
+
+    <div class="doctor-header-status">
+
+        <span></span>
+
+        Available
+
+    </div>
+
+
+    <div class="user-avatar doctor-header-avatar">
+
+        {{ request.user.name|first|upper }}
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+
+{% block content %}
+
+
+<!-- =====================================
+     PAGE HEADING
+===================================== -->
+
+<section class="page-heading doctor-page-heading">
+
+    <span class="heading-label">
+
+        SCHEDULE
+
+    </span>
+
+
+    <h1>
+
+        Manage Availability
+
+    </h1>
+
+
+    <p>
+
+        Create appointment sessions for
+        your patients.
+
+    </p>
+
+</section>
+
+
+
+<!-- =====================================
+     MAIN LAYOUT
+===================================== -->
+
+<div class="availability-layout">
+
+
+    <!-- =================================
+         CREATE AVAILABILITY
+    ================================== -->
+
+    <section class="availability-create glass">
+
+
+        <div class="availability-create-heading">
+
+
+            <div class="availability-create-icon">
+
+                <i class="fa-solid fa-calendar-plus"></i>
+
+            </div>
+
+
+            <div>
+
+                <span>
+
+                    CREATE SLOTS
+
+                </span>
+
+
+                <h2>
+
+                    Add Availability
+
+                </h2>
+
+
+                <p>
+
+                    Select a date and consultation
+                    session.
+
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =================================
+             FORM
+        ================================== -->
+
+        <form
+            method="POST"
+            class="availability-form"
+        >
+
+            {% csrf_token %}
+
+
+            <!-- DATE -->
+
+            <div class="availability-field">
+
+
+                <label
+                    for="{{ form.date.id_for_label }}"
+                >
+
+                    <i class="fa-solid fa-calendar-day"></i>
+
+                    Appointment Date
+
+                </label>
+
+
+                {{ form.date }}
+
+
+                {% if form.date.errors %}
+
+                    <div class="availability-error">
+
+                        {{ form.date.errors.0 }}
+
+                    </div>
+
+                {% endif %}
+
+
+            </div>
+
+
+
+            <!-- SESSION -->
+
+            <div class="availability-field">
+
+
+                <label
+                    for="{{ form.session.id_for_label }}"
+                >
+
+                    <i class="fa-solid fa-clock"></i>
+
+                    Consultation Session
+
+                </label>
+
+
+                <div class="session-options">
+
+
+                    <label class="session-option">
+
+
+                        <input
+                            type="radio"
+                            name="{{ form.session.html_name }}"
+                            value="morning"
+                        >
+
+
+                        <div class="session-option-content">
+
+                            <div class="session-option-icon">
+
+                                <i class="fa-solid fa-sun"></i>
+
+                            </div>
+
+
+                            <div>
+
+                                <strong>
+                                    Morning
+                                </strong>
+
+                                <span>
+                                    09:00 AM — 12:20 PM
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                    </label>
+
+
+
+                    <label class="session-option">
+
+
+                        <input
+                            type="radio"
+                            name="{{ form.session.html_name }}"
+                            value="afternoon"
+                        >
+
+
+                        <div class="session-option-content">
+
+                            <div class="session-option-icon">
+
+                                <i class="fa-solid fa-cloud-sun"></i>
+
+                            </div>
+
+
+                            <div>
+
+                                <strong>
+                                    Afternoon
+                                </strong>
+
+                                <span>
+                                    01:00 PM — 04:20 PM
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                    </label>
+
+
+
+                    <label class="session-option">
+
+
+                        <input
+                            type="radio"
+                            name="{{ form.session.html_name }}"
+                            value="evening"
+                        >
+
+
+                        <div class="session-option-content">
+
+                            <div class="session-option-icon">
+
+                                <i class="fa-solid fa-moon"></i>
+
+                            </div>
+
+
+                            <div>
+
+                                <strong>
+                                    Evening
+                                </strong>
+
+                                <span>
+                                    05:00 PM — 08:20 PM
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                    </label>
+
+
+                </div>
+
+
+                {% if form.session.errors %}
+
+                    <div class="availability-error">
+
+                        {{ form.session.errors.0 }}
+
+                    </div>
+
+                {% endif %}
+
+
+            </div>
+
+
+
+            <!-- SUBMIT -->
+
+            <button
+                type="submit"
+                class="availability-submit"
+            >
+
+                <i class="fa-solid fa-plus"></i>
+
+                Create Appointment Slots
+
+            </button>
+
+
+        </form>
+
+
+    </section>
+
+
+
+    <!-- =================================
+         INFORMATION
+    ================================== -->
+
+    <aside class="availability-info">
+
+
+        <!-- SLOT INFORMATION -->
+
+        <div class="availability-info-card glass">
+
+
+            <div class="availability-info-icon">
+
+                <i class="fa-solid fa-circle-info"></i>
+
+            </div>
+
+
+            <h3>
+
+                How slots work
+
+            </h3>
+
+
+            <p>
+
+                Each session automatically creates
+                appointment tokens at 10-minute
+                intervals.
+
+            </p>
+
+
+            <div class="slot-generation-example">
+
+
+                <div>
+
+                    <span>
+                        Morning
+                    </span>
+
+                    <strong>
+                        20
+                    </strong>
+
+                    <small>
+                        tokens
+                    </small>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        Duration
+                    </span>
+
+                    <strong>
+                        10
+                    </strong>
+
+                    <small>
+                        min / token
+                    </small>
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- WARNING -->
+
+        <div class="availability-warning">
+
+
+            <i class="fa-solid fa-triangle-exclamation"></i>
+
+
+            <div>
+
+                <strong>
+                    Important
+                </strong>
+
+
+                <p>
+
+                    You cannot create the same
+                    session twice for the same date.
+
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+    </aside>
+
+
+</div>
+
+
+{% endblock %}

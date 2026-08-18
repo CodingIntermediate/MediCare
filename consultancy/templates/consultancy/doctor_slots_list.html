@@ -1,0 +1,507 @@
+{% extends "consultancy/base.html" %}
+
+
+{% block title %}
+    My Slots
+{% endblock %}
+
+
+{% block navigation %}
+
+<a href="{% url 'doctor_dashboard' %}">
+
+    <i class="fa-solid fa-house"></i>
+
+    <span>
+        Dashboard
+    </span>
+
+</a>
+
+
+<a
+    class="active"
+    href="{% url 'doctor_slots_list' %}"
+>
+
+    <i class="fa-solid fa-calendar-days"></i>
+
+    <span>
+        My Slots
+    </span>
+
+</a>
+
+
+<a href="{% url 'doctor_bookings' %}">
+
+    <i class="fa-solid fa-users"></i>
+
+    <span>
+        Patient Bookings
+    </span>
+
+</a>
+
+
+<a href="{% url 'doctor_profile' %}">
+
+    <i class="fa-solid fa-user-doctor"></i>
+
+    <span>
+        My Profile
+    </span>
+
+</a>
+
+{% endblock %}
+
+
+{% block navigation_bottom %}
+
+<a href="{% url 'doctor_availability' %}">
+
+    <i class="fa-solid fa-clock"></i>
+
+    <span>
+        Availability
+    </span>
+
+</a>
+
+
+<a href="{% url 'doctor_logout' %}">
+
+    <i class="fa-solid fa-right-from-bracket"></i>
+
+    <span>
+        Logout
+    </span>
+
+</a>
+
+{% endblock %}
+
+
+{% block header %}
+
+<div class="doctor-user-area">
+
+    <div class="doctor-header-status">
+
+        <span></span>
+
+        Available
+
+    </div>
+
+
+    <div class="user-avatar doctor-header-avatar">
+
+        {{ request.user.name|first|upper }}
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+
+{% block content %}
+
+
+<!-- =====================================
+     PAGE HEADING
+===================================== -->
+
+<section class="page-heading doctor-page-heading">
+
+    <span class="heading-label">
+
+        SCHEDULE
+
+    </span>
+
+
+    <h1>
+
+        My Appointment Slots
+
+    </h1>
+
+
+    <p>
+
+        View and manage the appointment slots
+        you have created.
+
+    </p>
+
+</section>
+
+
+
+<!-- =====================================
+     TOP ACTION
+===================================== -->
+
+<div class="slots-page-actions">
+
+
+    <div class="slots-page-summary glass">
+
+
+        <div class="slots-summary-icon">
+
+            <i class="fa-solid fa-calendar-check"></i>
+
+        </div>
+
+
+        <div>
+
+            <span>
+
+                YOUR SCHEDULE
+
+            </span>
+
+
+            <strong>
+
+                Appointment Slots
+
+            </strong>
+
+
+            <p>
+
+                Monitor token availability and
+                patient bookings.
+
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+    <a
+        href="{% url 'doctor_availability' %}"
+        class="doctor-primary-button"
+    >
+
+        <i class="fa-solid fa-plus"></i>
+
+        Create Slots
+
+    </a>
+
+
+</div>
+
+
+
+<!-- =====================================
+     LEGEND
+===================================== -->
+
+<div class="doctor-slot-legend">
+
+
+    <div>
+
+        <span class="slot-status-dot available"></span>
+
+        Available
+
+    </div>
+
+
+    <div>
+
+        <span class="slot-status-dot booked"></span>
+
+        Booked
+
+    </div>
+
+
+</div>
+
+
+
+<!-- =====================================
+     SLOT LIST
+===================================== -->
+
+<section class="doctor-slots-list">
+
+
+{% regroup slots by date as date_groups %}
+
+
+{% for date_group in date_groups %}
+
+
+    <!-- =================================
+         DATE CARD
+    ================================== -->
+
+    <article class="doctor-date-card glass">
+
+
+        <!-- DATE HEADER -->
+
+        <div class="doctor-date-header">
+
+
+            <div class="doctor-date-icon">
+
+                <i class="fa-solid fa-calendar-day"></i>
+
+            </div>
+
+
+            <div>
+
+                <span>
+
+                    APPOINTMENT DATE
+
+                </span>
+
+
+                <h2>
+
+                    {{ date_group.grouper|date:"l, d F Y" }}
+
+                </h2>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =================================
+             SESSION GROUP
+        ================================== -->
+
+        {% regroup date_group.list by session as session_groups %}
+
+
+        {% for session_group in session_groups %}
+
+
+        <div class="doctor-session">
+
+
+            <!-- SESSION HEADER -->
+
+            <div class="doctor-session-header">
+
+
+                <div class="doctor-session-title">
+
+
+                    <div class="doctor-session-icon">
+
+                        {% if session_group.grouper == "morning" %}
+
+                            <i class="fa-solid fa-sun"></i>
+
+                        {% elif session_group.grouper == "afternoon" %}
+
+                            <i class="fa-solid fa-cloud-sun"></i>
+
+                        {% else %}
+
+                            <i class="fa-solid fa-moon"></i>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <div>
+
+                        <h3>
+
+                            {{ session_group.grouper|title }}
+
+                        </h3>
+
+
+                        <span>
+
+                            {% if session_group.grouper == "morning" %}
+
+                                09:00 AM — 12:20 PM
+
+                            {% elif session_group.grouper == "afternoon" %}
+
+                                01:00 PM — 04:20 PM
+
+                            {% else %}
+
+                                05:00 PM — 08:20 PM
+
+                            {% endif %}
+
+                        </span>
+
+                    </div>
+
+
+                </div>
+
+
+                <div class="doctor-session-count">
+
+                    {{ session_group.list|length }}
+
+                    <span>
+                        slots
+                    </span>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- =================================
+                 TOKENS
+            ================================== -->
+
+            <div class="doctor-token-grid">
+
+
+                {% for slot in session_group.list %}
+
+
+                <div
+                    class="
+                        doctor-token
+                        {% if slot.is_booked %}
+                            token-booked
+                        {% else %}
+                            token-available
+                        {% endif %}
+                    "
+                >
+
+
+                    <div class="doctor-token-number">
+
+                        {{ slot.slot_number|stringformat:"02d" }}
+
+                    </div>
+
+
+                    <div class="doctor-token-time">
+
+                        {{ slot.start_time|time:"h:i A" }}
+
+                    </div>
+
+
+                    {% if slot.is_booked %}
+
+                        <div class="doctor-token-status">
+
+                            <span></span>
+
+                            Booked
+
+                        </div>
+
+                    {% else %}
+
+                        <div class="doctor-token-status">
+
+                            <span></span>
+
+                            Available
+
+                        </div>
+
+                    {% endif %}
+
+
+                </div>
+
+
+                {% endfor %}
+
+
+            </div>
+
+
+        </div>
+
+
+        {% endfor %}
+
+
+    </article>
+
+
+{% empty %}
+
+
+    <!-- =================================
+         EMPTY STATE
+    ================================== -->
+
+    <div class="doctor-slots-empty glass">
+
+
+        <div class="doctor-slots-empty-icon">
+
+            <i class="fa-solid fa-calendar-xmark"></i>
+
+        </div>
+
+
+        <h2>
+
+            No slots created yet
+
+        </h2>
+
+
+        <p>
+
+            Create your first availability session
+            to start accepting patients.
+
+        </p>
+
+
+        <a
+            href="{% url 'doctor_availability' %}"
+            class="doctor-primary-button"
+        >
+
+            <i class="fa-solid fa-plus"></i>
+
+            Create Availability
+
+        </a>
+
+
+    </div>
+
+
+{% endfor %}
+
+
+</section>
+
+
+{% endblock %}

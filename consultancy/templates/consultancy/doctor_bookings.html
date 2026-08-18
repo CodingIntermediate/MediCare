@@ -1,0 +1,546 @@
+{% extends "consultancy/base.html" %}
+
+
+{% block title %}
+    Patient Bookings
+{% endblock %}
+
+
+{% block navigation %}
+
+<a href="{% url 'doctor_dashboard' %}">
+
+    <i class="fa-solid fa-house"></i>
+
+    <span>
+        Dashboard
+    </span>
+
+</a>
+
+
+<a href="{% url 'doctor_slots_list' %}">
+
+    <i class="fa-solid fa-calendar-days"></i>
+
+    <span>
+        My Slots
+    </span>
+
+</a>
+
+
+<a
+    class="active"
+    href="{% url 'doctor_bookings' %}"
+>
+
+    <i class="fa-solid fa-users"></i>
+
+    <span>
+        Patient Bookings
+    </span>
+
+</a>
+
+
+<a href="{% url 'doctor_profile' %}">
+
+    <i class="fa-solid fa-user-doctor"></i>
+
+    <span>
+        My Profile
+    </span>
+
+</a>
+
+{% endblock %}
+
+
+{% block navigation_bottom %}
+
+<a href="{% url 'doctor_availability' %}">
+
+    <i class="fa-solid fa-clock"></i>
+
+    <span>
+        Availability
+    </span>
+
+</a>
+
+
+<a href="{% url 'doctor_logout' %}">
+
+    <i class="fa-solid fa-right-from-bracket"></i>
+
+    <span>
+        Logout
+    </span>
+
+</a>
+
+{% endblock %}
+
+
+{% block header %}
+
+<div class="doctor-user-area">
+
+    <div class="doctor-header-status">
+
+        <span></span>
+
+        Available
+
+    </div>
+
+
+    <div class="user-avatar doctor-header-avatar">
+
+        {{ request.user.name|first|upper }}
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+
+{% block content %}
+
+
+<!-- =====================================
+     PAGE HEADING
+===================================== -->
+
+<section class="page-heading doctor-page-heading">
+
+    <span class="heading-label">
+
+        PATIENT MANAGEMENT
+
+    </span>
+
+
+    <h1>
+
+        Patient Bookings
+
+    </h1>
+
+
+    <p>
+
+        View and manage patients who have
+        booked your consultations.
+
+    </p>
+
+</section>
+
+
+
+<!-- =====================================
+     TOP SUMMARY
+===================================== -->
+
+<section class="doctor-booking-summary">
+
+
+    <div class="doctor-booking-summary-card glass">
+
+
+        <div class="doctor-booking-summary-icon">
+
+            <i class="fa-solid fa-users"></i>
+
+        </div>
+
+
+        <div>
+
+            <span>
+                TOTAL BOOKINGS
+            </span>
+
+
+            <strong>
+
+                {{ bookings|length }}
+
+            </strong>
+
+
+            <p>
+                Appointments
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+
+    <div class="doctor-booking-summary-card glass">
+
+
+        <div class="doctor-booking-summary-icon upcoming-summary">
+
+            <i class="fa-solid fa-calendar-check"></i>
+
+        </div>
+
+
+        <div>
+
+            <span>
+                CONSULTATIONS
+            </span>
+
+
+            <strong>
+
+                {{ bookings|length }}
+
+            </strong>
+
+
+            <p>
+                Patient appointments
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =====================================
+     BOOKING LIST
+===================================== -->
+
+<section class="doctor-booking-list">
+
+
+    {% for booking in bookings %}
+
+
+    <article class="doctor-booking-card glass">
+
+
+        <!-- =================================
+             PATIENT
+        ================================== -->
+
+        <div class="doctor-patient">
+
+
+            <div class="doctor-patient-avatar">
+
+                {{ booking.patient.user.name|first|upper }}
+
+            </div>
+
+
+            <div>
+
+                <span class="patient-label">
+
+                    PATIENT
+
+                </span>
+
+
+                <h2>
+
+                    {{ booking.patient.user.name }}
+
+                </h2>
+
+
+                <p>
+
+                    {{ booking.patient.user.email }}
+
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =================================
+             STATUS
+        ================================== -->
+
+        <div class="doctor-booking-status">
+
+
+            {% if booking.status == "confirmed" %}
+
+
+                <span class="doctor-status confirmed-status">
+
+                    <i class="fa-solid fa-circle-check"></i>
+
+                    Confirmed
+
+                </span>
+
+
+            {% elif booking.status == "cancelled" %}
+
+
+                <span class="doctor-status cancelled-status">
+
+                    <i class="fa-solid fa-circle-xmark"></i>
+
+                    Cancelled
+
+                </span>
+
+
+            {% else %}
+
+
+                <span class="doctor-status">
+
+                    {{ booking.status|title }}
+
+                </span>
+
+
+            {% endif %}
+
+
+        </div>
+
+
+
+        <!-- =================================
+             BOOKING DETAILS
+        ================================== -->
+
+        <div class="doctor-booking-details">
+
+
+            <div class="doctor-booking-detail">
+
+
+                <div class="doctor-booking-detail-icon">
+
+                    <i class="fa-solid fa-ticket"></i>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        Token
+                    </span>
+
+
+                    <strong class="doctor-token-highlight">
+
+                        #{{ booking.token_id }}
+
+                    </strong>
+
+                </div>
+
+
+            </div>
+
+
+
+            <div class="doctor-booking-detail">
+
+
+                <div class="doctor-booking-detail-icon">
+
+                    <i class="fa-solid fa-calendar-day"></i>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        Date
+                    </span>
+
+
+                    <strong>
+
+                        {{ booking.slot.date|date:"d M Y" }}
+
+                    </strong>
+
+                </div>
+
+
+            </div>
+
+
+
+            <div class="doctor-booking-detail">
+
+
+                <div class="doctor-booking-detail-icon">
+
+                    <i class="fa-solid fa-clock"></i>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        Time
+                    </span>
+
+
+                    <strong>
+
+                        {{ booking.slot.start_time|time:"h:i A" }}
+
+                    </strong>
+
+                </div>
+
+
+            </div>
+
+
+
+            <div class="doctor-booking-detail">
+
+
+                <div class="doctor-booking-detail-icon">
+
+                    <i class="fa-solid fa-indian-rupee-sign"></i>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        Consultation Fee
+                    </span>
+
+
+                    <strong>
+
+                        ₹{{ booking.consultation_fee }}
+
+                    </strong>
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =================================
+             FOOTER
+        ================================== -->
+
+        <div class="doctor-booking-footer">
+
+
+            <div class="doctor-booking-id">
+
+                Booking ID:
+
+                <strong>
+
+                    {{ booking.booking_id }}
+
+                </strong>
+
+            </div>
+
+
+            <div class="doctor-booking-time">
+
+                <i class="fa-solid fa-calendar-check"></i>
+
+                Appointment scheduled
+
+            </div>
+
+
+        </div>
+
+
+    </article>
+
+
+    {% empty %}
+
+
+    <!-- =================================
+         EMPTY
+    ================================== -->
+
+    <div class="doctor-bookings-empty glass">
+
+
+        <div class="doctor-bookings-empty-icon">
+
+            <i class="fa-solid fa-user-clock"></i>
+
+        </div>
+
+
+        <h2>
+
+            No patient bookings yet
+
+        </h2>
+
+
+        <p>
+
+            Patient appointments will appear
+            here when someone books a consultation.
+
+        </p>
+
+
+        <a
+            href="{% url 'doctor_availability' %}"
+            class="doctor-primary-button"
+        >
+
+            <i class="fa-solid fa-calendar-plus"></i>
+
+            Manage Availability
+
+        </a>
+
+
+    </div>
+
+
+    {% endfor %}
+
+
+</section>
+
+
+{% endblock %}

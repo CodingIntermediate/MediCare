@@ -1,0 +1,244 @@
+{% extends "consultancy/base.html" %}
+
+
+{% block title %}
+    Find a Doctor
+{% endblock %}
+
+
+{% block navigation %}
+
+<a href="{% url 'patient_dashboard' %}">
+
+    <i class="fa-solid fa-house"></i>
+
+    <span>
+        Dashboard
+    </span>
+
+</a>
+
+
+<a
+    class="active"
+    href="{% url 'doctor_categories' %}"
+>
+
+    <i class="fa-solid fa-user-doctor"></i>
+
+    <span>
+        Find a Doctor
+    </span>
+
+</a>
+
+
+<a href="{% url 'my_bookings' %}">
+
+    <i class="fa-solid fa-calendar-check"></i>
+
+    <span>
+        My Bookings
+    </span>
+
+</a>
+
+{% endblock %}
+
+
+{% block navigation_bottom %}
+
+<a href="{% url 'patient_logout' %}">
+
+    <i class="fa-solid fa-right-from-bracket"></i>
+
+    <span>
+        Logout
+    </span>
+
+</a>
+
+{% endblock %}
+
+
+{% block header %}
+
+<div class="user-area">
+
+    <div class="user-avatar">
+
+        <i class="fa-solid fa-user"></i>
+
+    </div>
+
+    <span class="user-name">
+
+        Find a Doctor
+
+    </span>
+
+</div>
+
+{% endblock %}
+
+
+{% block content %}
+
+
+<!-- PAGE HEADING -->
+
+<section class="page-heading">
+
+    <span class="heading-label">
+
+        MEDICAL SPECIALTIES
+
+    </span>
+
+    <h1>
+
+        Find a Doctor
+
+    </h1>
+
+    <p>
+
+        Choose a medical specialty and
+        find an experienced doctor.
+
+    </p>
+
+</section>
+
+
+
+<!-- SEARCH / INFO BAR -->
+
+<section class="category-toolbar glass">
+
+    <div class="toolbar-icon">
+
+        <i class="fa-solid fa-stethoscope"></i>
+
+    </div>
+
+
+    <div>
+
+        <h3>
+
+            Find the right specialist
+
+        </h3>
+
+        <p>
+
+            Browse our available medical
+            categories below.
+
+        </p>
+
+    </div>
+
+</section>
+
+
+
+<!-- CATEGORIES -->
+
+<section class="category-grid">
+
+
+    {% for category in categories %}
+
+
+    <article
+        class="category-card glass"
+    >
+
+
+        <!-- ICON -->
+
+        <div class="category-icon">
+
+            <i class="fa-solid fa-stethoscope"></i>
+
+        </div>
+
+
+        <!-- CATEGORY NAME -->
+
+        <h2>
+
+            {{ category.name }}
+
+        </h2>
+
+
+        <p>
+
+            Consult an experienced
+            specialist in {{ category.name }}.
+
+        </p>
+
+
+        <!-- BUTTON -->
+
+        <a
+            href="{% url 'doctors_by_category' category.id %}"
+            class="category-button"
+        >
+
+            <span>
+                Explore Doctors
+            </span>
+
+            <i class="fa-solid fa-arrow-right"></i>
+
+        </a>
+
+
+    </article>
+
+
+    {% empty %}
+
+
+    <!-- EMPTY STATE -->
+
+    <div class="category-empty glass">
+
+
+        <div class="empty-icon">
+
+            <i class="fa-solid fa-folder-open"></i>
+
+        </div>
+
+
+        <h2>
+
+            No categories available
+
+        </h2>
+
+
+        <p>
+
+            Doctor categories have not been
+            added yet.
+
+        </p>
+
+
+    </div>
+
+
+    {% endfor %}
+
+
+</section>
+
+
+{% endblock %}

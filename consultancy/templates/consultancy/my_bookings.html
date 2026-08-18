@@ -1,0 +1,549 @@
+{% extends "consultancy/base.html" %}
+
+
+{% block title %}
+    My Bookings
+{% endblock %}
+
+
+{% block navigation %}
+
+<a href="{% url 'patient_dashboard' %}">
+
+    <i class="fa-solid fa-house"></i>
+
+    <span>
+        Dashboard
+    </span>
+
+</a>
+
+
+<a href="{% url 'doctor_categories' %}">
+
+    <i class="fa-solid fa-user-doctor"></i>
+
+    <span>
+        Find a Doctor
+    </span>
+
+</a>
+
+
+<a
+    class="active"
+    href="{% url 'my_bookings' %}"
+>
+
+    <i class="fa-solid fa-calendar-check"></i>
+
+    <span>
+        My Bookings
+    </span>
+
+</a>
+
+{% endblock %}
+
+
+{% block navigation_bottom %}
+
+<a href="{% url 'patient_logout' %}">
+
+    <i class="fa-solid fa-right-from-bracket"></i>
+
+    <span>
+        Logout
+    </span>
+
+</a>
+
+{% endblock %}
+
+
+{% block header %}
+
+<div class="user-area">
+
+    <div class="user-avatar">
+
+        <i class="fa-solid fa-calendar-check"></i>
+
+    </div>
+
+    <span class="user-name">
+
+        My Bookings
+
+    </span>
+
+</div>
+
+{% endblock %}
+
+
+{% block content %}
+
+
+<!-- =====================================
+     PAGE HEADING
+===================================== -->
+
+<section class="page-heading">
+
+    <span class="heading-label">
+
+        APPOINTMENTS
+
+    </span>
+
+
+    <h1>
+
+        My Bookings
+
+    </h1>
+
+
+    <p>
+
+        View and manage your consultation
+        appointments.
+
+    </p>
+
+</section>
+
+
+
+<!-- =====================================
+     UPCOMING
+===================================== -->
+
+<section class="booking-section">
+
+
+    <div class="booking-section-heading">
+
+        <div>
+
+            <span>
+                UPCOMING
+            </span>
+
+            <h2>
+                Upcoming Appointments
+            </h2>
+
+        </div>
+
+
+        <div class="booking-section-icon">
+
+            <i class="fa-solid fa-calendar-day"></i>
+
+        </div>
+
+    </div>
+
+
+
+    {% for booking in upcoming_bookings %}
+
+
+    <article class="booking-card glass">
+
+
+        <!-- DOCTOR -->
+
+        <div class="booking-doctor">
+
+
+            <div class="booking-doctor-avatar">
+
+                <i class="fa-solid fa-user-doctor"></i>
+
+            </div>
+
+
+            <div>
+
+                <span class="booking-specialty">
+
+                    {{ booking.doctor.category.name }}
+
+                </span>
+
+
+                <h3>
+
+                    Dr. {{ booking.doctor.user.name }}
+
+                </h3>
+
+
+                <p>
+
+                    {{ booking.doctor.qualification }}
+
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- STATUS -->
+
+        <div class="booking-status confirmed">
+
+            <span></span>
+
+            Confirmed
+
+        </div>
+
+
+
+        <!-- DETAILS -->
+
+        <div class="booking-info-grid">
+
+
+            <div class="booking-info-item">
+
+                <span>
+
+                    <i class="fa-solid fa-calendar"></i>
+
+                    Date
+
+                </span>
+
+
+                <strong>
+
+                    {{ booking.slot.date|date:"d M Y" }}
+
+                </strong>
+
+            </div>
+
+
+
+            <div class="booking-info-item">
+
+                <span>
+
+                    <i class="fa-solid fa-clock"></i>
+
+                    Time
+
+                </span>
+
+
+                <strong>
+
+                    {{ booking.slot.start_time|time:"h:i A" }}
+
+                </strong>
+
+            </div>
+
+
+
+            <div class="booking-info-item">
+
+                <span>
+
+                    <i class="fa-solid fa-ticket"></i>
+
+                    Token
+
+                </span>
+
+
+                <strong class="booking-token">
+
+                    #{{ booking.token_id }}
+
+                </strong>
+
+            </div>
+
+
+
+            <div class="booking-info-item">
+
+                <span>
+
+                    <i class="fa-solid fa-indian-rupee-sign"></i>
+
+                    Fee
+
+                </span>
+
+
+                <strong>
+
+                    ₹{{ booking.consultation_fee }}
+
+                </strong>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- FOOTER -->
+
+        <div class="booking-footer">
+
+
+            <div class="booking-id-display">
+
+                Booking ID:
+
+                <strong>
+
+                    {{ booking.booking_id }}
+
+                </strong>
+
+            </div>
+
+
+            <div class="booking-actions">
+
+
+                <a
+                    href="{% url 'booking_confirmation' booking.id %}"
+                    class="booking-view-button"
+                >
+
+                    <i class="fa-solid fa-eye"></i>
+
+                    View
+
+                </a>
+
+
+                <a
+                    href="{% url 'cancel_booking' booking.id %}"
+                    class="booking-cancel-button"
+                >
+
+                    <i class="fa-solid fa-xmark"></i>
+
+                    Cancel
+
+                </a>
+
+
+            </div>
+
+
+        </div>
+
+
+    </article>
+
+
+    {% empty %}
+
+
+    <div class="booking-empty glass">
+
+
+        <div class="booking-empty-icon">
+
+            <i class="fa-regular fa-calendar-xmark"></i>
+
+        </div>
+
+
+        <h3>
+
+            No upcoming appointments
+
+        </h3>
+
+
+        <p>
+
+            You don't have any upcoming
+            consultations.
+
+        </p>
+
+
+        <a
+            href="{% url 'doctor_categories' %}"
+            class="booking-find-button"
+        >
+
+            <i class="fa-solid fa-user-doctor"></i>
+
+            Find a Doctor
+
+        </a>
+
+
+    </div>
+
+
+    {% endfor %}
+
+
+</section>
+
+
+
+<!-- =====================================
+     HISTORY
+===================================== -->
+
+<section class="booking-section history-section">
+
+
+    <div class="booking-section-heading">
+
+        <div>
+
+            <span>
+                HISTORY
+            </span>
+
+            <h2>
+                Previous Appointments
+            </h2>
+
+        </div>
+
+
+        <div class="booking-section-icon history-icon">
+
+            <i class="fa-solid fa-clock-rotate-left"></i>
+
+        </div>
+
+    </div>
+
+
+
+    {% for booking in past_bookings %}
+
+
+    <article class="history-card glass">
+
+
+        <div class="history-doctor">
+
+
+            <div class="history-avatar">
+
+                <i class="fa-solid fa-user-doctor"></i>
+
+            </div>
+
+
+            <div>
+
+                <h3>
+
+                    Dr. {{ booking.doctor.user.name }}
+
+                </h3>
+
+
+                <span>
+
+                    {{ booking.doctor.category.name }}
+
+                </span>
+
+            </div>
+
+
+        </div>
+
+
+
+        <div class="history-date">
+
+            <span>
+
+                <i class="fa-solid fa-calendar"></i>
+
+                {{ booking.slot.date|date:"d M Y" }}
+
+            </span>
+
+
+            <span>
+
+                <i class="fa-solid fa-clock"></i>
+
+                {{ booking.slot.start_time|time:"h:i A" }}
+
+            </span>
+
+        </div>
+
+
+
+        {% if booking.status == "cancelled" %}
+
+
+            <div class="booking-status cancelled">
+
+                <span></span>
+
+                Cancelled
+
+            </div>
+
+
+        {% else %}
+
+
+            <div class="booking-status completed">
+
+                <span></span>
+
+                Completed
+
+            </div>
+
+
+        {% endif %}
+
+
+    </article>
+
+
+    {% empty %}
+
+
+    <div class="history-empty">
+
+        <i class="fa-solid fa-clock-rotate-left"></i>
+
+        <span>
+            No previous appointments
+        </span>
+
+    </div>
+
+
+    {% endfor %}
+
+
+</section>
+
+
+{% endblock %}

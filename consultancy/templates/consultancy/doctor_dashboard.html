@@ -1,0 +1,584 @@
+{% extends "consultancy/base.html" %}
+
+
+{% block title %}
+    Doctor Dashboard
+{% endblock %}
+
+
+{% block navigation %}
+
+<a
+    class="active"
+    href="{% url 'doctor_dashboard' %}"
+>
+
+    <i class="fa-solid fa-house"></i>
+
+    <span>
+        Dashboard
+    </span>
+
+</a>
+
+
+<a href="{% url 'doctor_slots_list' %}">
+
+    <i class="fa-solid fa-calendar-days"></i>
+
+    <span>
+        My Slots
+    </span>
+
+</a>
+
+
+<a href="{% url 'doctor_bookings' %}">
+
+    <i class="fa-solid fa-users"></i>
+
+    <span>
+        Patient Bookings
+    </span>
+
+</a>
+
+
+<a href="{% url 'doctor_profile' %}">
+
+    <i class="fa-solid fa-user-doctor"></i>
+
+    <span>
+        My Profile
+    </span>
+
+</a>
+
+{% endblock %}
+
+
+{% block navigation_bottom %}
+
+<a href="{% url 'doctor_availability' %}">
+
+    <i class="fa-solid fa-clock"></i>
+
+    <span>
+        Availability
+    </span>
+
+</a>
+
+
+<a
+    href="{% url 'doctor_logout' %}"
+    onclick="return confirmDoctorLogout();"
+>
+
+    <i class="fa-solid fa-right-from-bracket"></i>
+
+    <span>
+        Logout
+    </span>
+
+</a>
+
+{% endblock %}
+
+
+{% block header %}
+
+<div class="doctor-user-area">
+
+
+    <div class="doctor-header-status">
+
+        <span></span>
+
+        Available
+
+    </div>
+
+
+    <div class="user-avatar doctor-header-avatar">
+
+        {{ user.name|first|upper }}
+
+    </div>
+
+
+    <div class="doctor-header-name">
+
+        <span>
+            Doctor
+        </span>
+
+        <strong>
+            Dr. {{ user.name }}
+        </strong>
+
+    </div>
+
+
+</div>
+
+{% endblock %}
+
+
+{% block content %}
+
+
+<!-- =====================================
+     WELCOME
+===================================== -->
+
+<section class="doctor-welcome glass">
+
+
+    <div class="doctor-welcome-content">
+
+
+        <span class="heading-label">
+
+            DOCTOR PORTAL
+
+        </span>
+
+
+        <h1>
+
+            Good evening,
+            Dr. {{ user.name }} 👋
+
+        </h1>
+
+
+        <p>
+
+            Manage your appointments,
+            availability and patient consultations
+            from one place.
+
+        </p>
+
+
+        <a
+            href="{% url 'doctor_availability' %}"
+            class="doctor-primary-button"
+        >
+
+            <i class="fa-solid fa-plus"></i>
+
+            Create Availability
+
+        </a>
+
+
+    </div>
+
+
+    <div class="doctor-welcome-icon">
+
+        <i class="fa-solid fa-stethoscope"></i>
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =====================================
+     DOCTOR INFO
+===================================== -->
+
+<section class="doctor-profile-strip glass">
+
+
+    <div class="doctor-profile-avatar">
+
+        <i class="fa-solid fa-user-doctor"></i>
+
+    </div>
+
+
+    <div class="doctor-profile-info">
+
+        <span>
+
+            SPECIALIST
+
+        </span>
+
+
+        <h2>
+
+            Dr. {{ user.name }}
+
+        </h2>
+
+
+        <p>
+
+            {{ doctor.category.name }}
+
+            • {{ doctor.qualification }}
+
+        </p>
+
+    </div>
+
+
+    <div class="doctor-profile-experience">
+
+        <strong>
+
+            {{ doctor.experience }}
+
+        </strong>
+
+        <span>
+
+            Years Experience
+
+        </span>
+
+    </div>
+
+
+    <div class="doctor-profile-fee">
+
+        <strong>
+
+            ₹{{ doctor.consultation_fee }}
+
+        </strong>
+
+        <span>
+
+            Consultation
+
+        </span>
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =====================================
+     STATISTICS
+===================================== -->
+
+<section class="doctor-stats-grid">
+
+
+    <div class="doctor-stat glass">
+
+
+        <div class="doctor-stat-icon">
+
+            <i class="fa-solid fa-calendar-day"></i>
+
+        </div>
+
+
+        <div>
+
+            <span>
+                Today's Patients
+            </span>
+
+            <h2>
+                —
+            </h2>
+
+        </div>
+
+
+    </div>
+
+
+
+    <div class="doctor-stat glass">
+
+
+        <div class="doctor-stat-icon">
+
+            <i class="fa-solid fa-calendar-check"></i>
+
+        </div>
+
+
+        <div>
+
+            <span>
+                Upcoming Bookings
+            </span>
+
+            <h2>
+                —
+            </h2>
+
+        </div>
+
+
+    </div>
+
+
+
+    <div class="doctor-stat glass">
+
+
+        <div class="doctor-stat-icon available-stat">
+
+            <i class="fa-solid fa-circle-check"></i>
+
+        </div>
+
+
+        <div>
+
+            <span>
+                Account Status
+            </span>
+
+            <h2 class="status-text">
+
+                {% if doctor.is_approved %}
+
+                    Approved
+
+                {% else %}
+
+                    Pending
+
+                {% endif %}
+
+            </h2>
+
+        </div>
+
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =====================================
+     QUICK ACTIONS
+===================================== -->
+
+<section class="doctor-dashboard-section">
+
+
+    <div class="doctor-section-heading">
+
+        <div>
+
+            <span>
+                QUICK ACTIONS
+            </span>
+
+            <h2>
+                Manage your practice
+            </h2>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="doctor-action-grid">
+
+
+        <!-- SLOTS -->
+
+        <a
+            href="{% url 'doctor_slots_list' %}"
+            class="doctor-action-card glass"
+        >
+
+
+            <div class="doctor-action-icon">
+
+                <i class="fa-solid fa-calendar-days"></i>
+
+            </div>
+
+
+            <div>
+
+                <h3>
+                    My Slots
+                </h3>
+
+
+                <p>
+
+                    View your created appointment
+                    slots and their booking status.
+
+                </p>
+
+
+                <span>
+
+                    Manage Slots
+
+                    <i class="fa-solid fa-arrow-right"></i>
+
+                </span>
+
+            </div>
+
+
+        </a>
+
+
+
+        <!-- BOOKINGS -->
+
+        <a
+            href="{% url 'doctor_bookings' %}"
+            class="doctor-action-card glass"
+        >
+
+
+            <div class="doctor-action-icon booking-action-icon">
+
+                <i class="fa-solid fa-users"></i>
+
+            </div>
+
+
+            <div>
+
+                <h3>
+                    Patient Bookings
+                </h3>
+
+
+                <p>
+
+                    View your patients and
+                    their consultation details.
+
+                </p>
+
+
+                <span>
+
+                    View Bookings
+
+                    <i class="fa-solid fa-arrow-right"></i>
+
+                </span>
+
+            </div>
+
+
+        </a>
+
+
+
+        <!-- AVAILABILITY -->
+
+        <a
+            href="{% url 'doctor_availability' %}"
+            class="doctor-action-card glass"
+        >
+
+
+            <div class="doctor-action-icon availability-action-icon">
+
+                <i class="fa-solid fa-clock"></i>
+
+            </div>
+
+
+            <div>
+
+                <h3>
+                    Set Availability
+                </h3>
+
+
+                <p>
+
+                    Create morning, afternoon
+                    or evening appointment slots.
+
+                </p>
+
+
+                <span>
+
+                    Set Availability
+
+                    <i class="fa-solid fa-arrow-right"></i>
+
+                </span>
+
+            </div>
+
+
+        </a>
+
+
+
+        <!-- PROFILE -->
+
+        <a
+            href="{% url 'doctor_profile' %}"
+            class="doctor-action-card glass"
+        >
+
+
+            <div class="doctor-action-icon profile-action-icon">
+
+                <i class="fa-solid fa-user"></i>
+
+            </div>
+
+
+            <div>
+
+                <h3>
+                    My Profile
+                </h3>
+
+
+                <p>
+
+                    View your professional
+                    information and profile.
+
+                </p>
+
+
+                <span>
+
+                    View Profile
+
+                    <i class="fa-solid fa-arrow-right"></i>
+
+                </span>
+
+            </div>
+
+
+        </a>
+
+
+    </div>
+
+
+</section>
+
+
+{% endblock %}

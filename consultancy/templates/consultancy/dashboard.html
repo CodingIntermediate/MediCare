@@ -1,0 +1,536 @@
+{% extends "consultancy/base.html" %}
+
+
+{% block title %}
+    Patient Dashboard
+{% endblock %}
+
+
+{% block navigation %}
+
+<a
+    class="active"
+    href="{% url 'patient_dashboard' %}"
+>
+
+    <i class="fa-solid fa-house"></i>
+
+    <span>
+        Dashboard
+    </span>
+
+</a>
+
+
+<a
+    href="{% url 'doctor_categories' %}"
+>
+
+    <i class="fa-solid fa-user-doctor"></i>
+
+    <span>
+        Find a Doctor
+    </span>
+
+</a>
+
+
+<a
+    href="{% url 'my_bookings' %}"
+>
+
+    <i class="fa-solid fa-calendar-check"></i>
+
+    <span>
+        My Bookings
+    </span>
+
+</a>
+
+{% endblock %}
+
+
+{% block navigation_bottom %}
+
+<a
+    href="{% url 'patient_logout' %}"
+>
+
+    <i class="fa-solid fa-right-from-bracket"></i>
+
+    <span>
+        Logout
+    </span>
+
+</a>
+
+{% endblock %}
+
+
+{% block header %}
+
+<div class="user-area">
+
+    <div class="user-avatar">
+
+        {{ user.name|first|upper }}
+
+    </div>
+
+    <span class="user-name">
+
+        {{ user.name }}
+
+    </span>
+
+</div>
+
+{% endblock %}
+
+
+{% block content %}
+
+
+<!-- =====================================
+     WELCOME
+===================================== -->
+
+<section class="welcome-section glass">
+
+
+    <div class="welcome-content">
+
+        <span class="welcome-small">
+
+            PATIENT PORTAL
+
+        </span>
+
+
+        <h1>
+
+            Good morning,
+            {{ user.name }} 👋
+
+        </h1>
+
+
+        <p>
+
+            Find the right specialist and
+            manage your healthcare appointments
+            in one place.
+
+        </p>
+
+
+        <a
+            href="{% url 'doctor_categories' %}"
+            class="dashboard-button"
+        >
+
+            <i class="fa-solid fa-magnifying-glass"></i>
+
+            Find a Doctor
+
+        </a>
+
+    </div>
+
+
+    <div class="welcome-decoration">
+
+        <i class="fa-solid fa-heart-pulse"></i>
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =====================================
+     STATISTICS
+===================================== -->
+
+<section class="stats-grid">
+
+
+    <div class="stat-card glass">
+
+        <div class="stat-icon">
+
+            <i class="fa-solid fa-user-doctor"></i>
+
+        </div>
+
+
+        <div>
+
+            <span class="stat-label">
+                Doctors
+            </span>
+
+            <h2>
+                —
+            </h2>
+
+            <p>
+                Available specialists
+            </p>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="stat-card glass">
+
+        <div class="stat-icon">
+
+            <i class="fa-solid fa-calendar-check"></i>
+
+        </div>
+
+
+        <div>
+
+            <span class="stat-label">
+                Bookings
+            </span>
+
+            <h2>
+                —
+            </h2>
+
+            <p>
+                Your appointments
+            </p>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="stat-card glass">
+
+        <div class="stat-icon">
+
+            <i class="fa-solid fa-clock"></i>
+
+        </div>
+
+
+        <div>
+
+            <span class="stat-label">
+                Availability
+            </span>
+
+            <h2>
+                24/7
+            </h2>
+
+            <p>
+                Easy access to care
+            </p>
+
+        </div>
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =====================================
+     QUICK ACTIONS
+===================================== -->
+
+<section class="dashboard-section">
+
+
+    <div class="section-heading">
+
+        <div>
+
+            <span>
+                GET STARTED
+            </span>
+
+            <h2>
+                What would you like to do?
+            </h2>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="action-grid">
+
+
+        <!-- Find Doctor -->
+
+        <div class="action-card glass">
+
+
+            <div class="action-icon doctor-icon">
+
+                <i class="fa-solid fa-stethoscope"></i>
+
+            </div>
+
+
+            <div class="action-content">
+
+                <h3>
+                    Find a Doctor
+                </h3>
+
+
+                <p>
+
+                    Browse medical specialists
+                    by category and choose the
+                    right doctor for your needs.
+
+                </p>
+
+
+                <a
+                    href="{% url 'doctor_categories' %}"
+                    class="text-button"
+                >
+
+                    Explore Doctors
+
+                    <i class="fa-solid fa-arrow-right"></i>
+
+                </a>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- My Bookings -->
+
+        <div class="action-card glass">
+
+
+            <div class="action-icon booking-icon">
+
+                <i class="fa-solid fa-calendar-days"></i>
+
+            </div>
+
+
+            <div class="action-content">
+
+                <h3>
+                    My Bookings
+                </h3>
+
+
+                <p>
+
+                    View your appointments,
+                    booking details and
+                    consultation schedule.
+
+                </p>
+
+
+                <a
+                    href="{% url 'my_bookings' %}"
+                    class="text-button"
+                >
+
+                    View Bookings
+
+                    <i class="fa-solid fa-arrow-right"></i>
+
+                </a>
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =====================================
+     HOW IT WORKS
+===================================== -->
+
+<section class="dashboard-section">
+
+
+    <div class="section-heading">
+
+        <div>
+
+            <span>
+                SIMPLE PROCESS
+            </span>
+
+            <h2>
+                How it works
+            </h2>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="steps-grid">
+
+
+        <div class="step-card">
+
+
+            <div class="step-number">
+                01
+            </div>
+
+
+            <div class="step-icon">
+
+                <i class="fa-solid fa-layer-group"></i>
+
+            </div>
+
+
+            <h3>
+                Choose Category
+            </h3>
+
+
+            <p>
+
+                Select the medical category
+                you need.
+
+            </p>
+
+
+        </div>
+
+
+
+        <div class="step-card">
+
+
+            <div class="step-number">
+                02
+            </div>
+
+
+            <div class="step-icon">
+
+                <i class="fa-solid fa-user-doctor"></i>
+
+            </div>
+
+
+            <h3>
+                Choose Doctor
+            </h3>
+
+
+            <p>
+
+                View doctors, experience
+                and consultation fees.
+
+            </p>
+
+
+        </div>
+
+
+
+        <div class="step-card">
+
+
+            <div class="step-number">
+                03
+            </div>
+
+
+            <div class="step-icon">
+
+                <i class="fa-solid fa-ticket"></i>
+
+            </div>
+
+
+            <h3>
+                Select Token
+            </h3>
+
+
+            <p>
+
+                Choose an available
+                appointment slot.
+
+            </p>
+
+
+        </div>
+
+
+
+        <div class="step-card">
+
+
+            <div class="step-number">
+                04
+            </div>
+
+
+            <div class="step-icon">
+
+                <i class="fa-solid fa-circle-check"></i>
+
+            </div>
+
+
+            <h3>
+                Get Confirmation
+            </h3>
+
+
+            <p>
+
+                Receive your booking ID,
+                date, time and token.
+
+            </p>
+
+
+        </div>
+
+
+    </div>
+
+
+</section>
+
+
+{% endblock %}

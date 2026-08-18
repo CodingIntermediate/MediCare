@@ -1,0 +1,555 @@
+{% extends "consultancy/base.html" %}
+
+
+{% block title %}
+    My Profile
+{% endblock %}
+
+
+{% block navigation %}
+
+<a href="{% url 'doctor_dashboard' %}">
+
+    <i class="fa-solid fa-house"></i>
+
+    <span>
+        Dashboard
+    </span>
+
+</a>
+
+
+<a href="{% url 'doctor_slots_list' %}">
+
+    <i class="fa-solid fa-calendar-days"></i>
+
+    <span>
+        My Slots
+    </span>
+
+</a>
+
+
+<a href="{% url 'doctor_bookings' %}">
+
+    <i class="fa-solid fa-users"></i>
+
+    <span>
+        Patient Bookings
+    </span>
+
+</a>
+
+
+<a
+    class="active"
+    href="{% url 'doctor_profile' %}"
+>
+
+    <i class="fa-solid fa-user-doctor"></i>
+
+    <span>
+        My Profile
+    </span>
+
+</a>
+
+{% endblock %}
+
+
+{% block navigation_bottom %}
+
+<a href="{% url 'doctor_availability' %}">
+
+    <i class="fa-solid fa-clock"></i>
+
+    <span>
+        Availability
+    </span>
+
+</a>
+
+
+<a href="{% url 'doctor_logout' %}">
+
+    <i class="fa-solid fa-right-from-bracket"></i>
+
+    <span>
+        Logout
+    </span>
+
+</a>
+
+{% endblock %}
+
+
+{% block header %}
+
+<div class="doctor-user-area">
+
+    <div class="doctor-header-status">
+
+        <span></span>
+
+        Available
+
+    </div>
+
+
+    <div class="user-avatar doctor-header-avatar">
+
+        {{ request.user.name|first|upper }}
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+
+{% block content %}
+
+
+<!-- =====================================
+     PAGE HEADING
+===================================== -->
+
+<section class="page-heading doctor-page-heading">
+
+    <span class="heading-label">
+
+        PROFESSIONAL PROFILE
+
+    </span>
+
+
+    <h1>
+
+        My Profile
+
+    </h1>
+
+
+    <p>
+
+        View your professional and
+        consultation information.
+
+    </p>
+
+</section>
+
+
+
+<!-- =====================================
+     PROFILE HERO
+===================================== -->
+
+<section class="doctor-profile-hero glass">
+
+
+    <div class="doctor-profile-large-avatar">
+
+        <i class="fa-solid fa-user-doctor"></i>
+
+    </div>
+
+
+    <div class="doctor-profile-hero-info">
+
+
+        <div class="doctor-profile-approved">
+
+
+            {% if doctor.is_approved %}
+
+                <span></span>
+
+                Verified Doctor
+
+            {% else %}
+
+                <span class="pending-dot"></span>
+
+                Approval Pending
+
+            {% endif %}
+
+
+        </div>
+
+
+        <h1>
+
+            Dr.{{ user.name }}
+
+        </h1>
+
+
+        <p>
+
+            {{ doctor.category.name }}
+
+        </p>
+
+
+        <div class="doctor-profile-hero-tags">
+
+
+            <span>
+
+                <i class="fa-solid fa-graduation-cap"></i>
+
+                {{ doctor.qualification }}
+
+            </span>
+
+
+            <span>
+
+                <i class="fa-solid fa-briefcase"></i>
+
+                {{ doctor.experience }} Years Experience
+
+            </span>
+
+
+        </div>
+
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =====================================
+     INFORMATION GRID
+===================================== -->
+
+<section class="doctor-profile-information">
+
+
+    <!-- PROFESSIONAL -->
+
+    <div class="doctor-profile-info-card glass">
+
+
+        <div class="doctor-profile-card-heading">
+
+
+            <div class="doctor-profile-card-icon">
+
+                <i class="fa-solid fa-stethoscope"></i>
+
+            </div>
+
+
+            <div>
+
+                <span>
+                    PROFESSIONAL
+                </span>
+
+
+                <h2>
+                    Professional Details
+                </h2>
+
+            </div>
+
+
+        </div>
+
+
+
+        <div class="doctor-detail-list">
+
+
+            <div class="doctor-detail-row">
+
+
+                <span>
+
+                    <i class="fa-solid fa-layer-group"></i>
+
+                    Specialization
+
+                </span>
+
+
+                <strong>
+
+                    {{ doctor.category.name }}
+
+                </strong>
+
+            </div>
+
+
+
+            <div class="doctor-detail-row">
+
+
+                <span>
+
+                    <i class="fa-solid fa-graduation-cap"></i>
+
+                    Qualification
+
+                </span>
+
+
+                <strong>
+
+                    {{ doctor.qualification }}
+
+                </strong>
+
+            </div>
+
+
+
+            <div class="doctor-detail-row">
+
+
+                <span>
+
+                    <i class="fa-solid fa-briefcase"></i>
+
+                    Experience
+
+                </span>
+
+
+                <strong>
+
+                    {{ doctor.experience }} Years
+
+                </strong>
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- CONSULTATION -->
+
+    <div class="doctor-profile-info-card glass">
+
+
+        <div class="doctor-profile-card-heading">
+
+
+            <div class="doctor-profile-card-icon fee-card-icon">
+
+                <i class="fa-solid fa-indian-rupee-sign"></i>
+
+            </div>
+
+
+            <div>
+
+                <span>
+                    CONSULTATION
+                </span>
+
+
+                <h2>
+                    Consultation Details
+                </h2>
+
+            </div>
+
+
+        </div>
+
+
+
+        <div class="doctor-fee-display">
+
+
+            <span>
+                Consultation Fee
+            </span>
+
+
+            <strong>
+
+                ₹{{ doctor.consultation_fee }}
+
+            </strong>
+
+
+            <small>
+
+                Per consultation
+
+            </small>
+
+
+        </div>
+
+
+
+        <div class="doctor-availability-status">
+
+
+            {% if doctor.is_available %}
+
+                <div class="availability-status-icon">
+
+                    <i class="fa-solid fa-check"></i>
+
+                </div>
+
+
+                <div>
+
+                    <strong>
+                        Currently Available
+                    </strong>
+
+
+                    <span>
+                        Patients can book your slots.
+                    </span>
+
+                </div>
+
+            {% else %}
+
+                <div class="availability-status-icon unavailable">
+
+                    <i class="fa-solid fa-xmark"></i>
+
+                </div>
+
+
+                <div>
+
+                    <strong>
+                        Currently Unavailable
+                    </strong>
+
+
+                    <span>
+                        Patients cannot book your slots.
+                    </span>
+
+                </div>
+
+            {% endif %}
+
+
+        </div>
+
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =====================================
+     ABOUT
+===================================== -->
+
+<section class="doctor-about-card glass">
+
+
+    <div class="doctor-profile-card-heading">
+
+
+        <div class="doctor-profile-card-icon about-icon">
+
+            <i class="fa-solid fa-user"></i>
+
+        </div>
+
+
+        <div>
+
+            <span>
+                ABOUT
+            </span>
+
+
+            <h2>
+                About Me
+            </h2>
+
+        </div>
+
+
+    </div>
+
+
+    <p class="doctor-about-text">
+
+        {% if doctor.about %}
+
+            {{ doctor.about }}
+
+        {% else %}
+
+            No information has been added
+            to your professional profile yet.
+
+        {% endif %}
+
+    </p>
+
+
+</section>
+
+
+
+<!-- =====================================
+     ACCOUNT
+===================================== -->
+
+<section class="doctor-account-card glass">
+
+
+    <div>
+
+        <span>
+            ACCOUNT EMAIL
+        </span>
+
+
+        <strong>
+
+            {{ user.email }}
+
+        </strong>
+
+    </div>
+
+
+    <div class="doctor-account-role">
+
+        <i class="fa-solid fa-shield-halved"></i>
+
+
+        <span>
+
+            Doctor Account
+
+        </span>
+
+    </div>
+
+
+</section>
+
+
+{% endblock %}

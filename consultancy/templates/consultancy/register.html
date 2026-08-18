@@ -1,0 +1,479 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Create Account | MediCare
+    </title>
+
+
+    <!-- Google Fonts -->
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+
+    <!-- Font Awesome -->
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    >
+
+
+    <!-- Project CSS -->
+
+    <link
+        rel="stylesheet"
+        href="{% static 'consultancy/css/style.css' %}"
+    >
+
+</head>
+
+
+<body class="auth-body">
+
+
+<!-- =========================================
+     BACKGROUND
+========================================= -->
+
+<div class="auth-background-circle auth-circle-one"></div>
+
+<div class="auth-background-circle auth-circle-two"></div>
+
+
+
+<!-- =========================================
+     CONTAINER
+========================================= -->
+
+<main class="auth-container register-container">
+
+
+    <!-- =====================================
+         BRAND
+    ====================================== -->
+
+    <div class="auth-brand">
+
+
+        <div class="auth-brand-icon">
+
+            <i class="fa-solid fa-heart-pulse"></i>
+
+        </div>
+
+
+        <div>
+
+            <h1>
+                MediCare
+            </h1>
+
+            <span>
+                Doctor Consultancy
+            </span>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- =====================================
+         REGISTER CARD
+    ====================================== -->
+
+    <section class="auth-card register-card">
+
+
+        <!-- HEADING -->
+
+        <div class="auth-heading">
+
+
+            <div class="auth-small-label">
+
+                PATIENT REGISTRATION
+
+            </div>
+
+
+            <h2>
+
+                Create your account
+
+            </h2>
+
+
+            <p>
+
+                Join MediCare and manage your
+                doctor appointments easily.
+
+            </p>
+
+
+        </div>
+
+
+
+        <!-- =================================
+             FORM
+        ================================== -->
+
+        <form
+            method="POST"
+            class="auth-form"
+        >
+
+            {% csrf_token %}
+
+
+
+            <!-- NAME -->
+
+            <div class="form-group">
+
+
+                <label
+                    for="{{ form.name.id_for_label }}"
+                >
+
+                    Full Name
+
+                </label>
+
+
+                <div class="input-wrapper">
+
+                    <i class="fa-solid fa-user"></i>
+
+
+                    {{ form.name }}
+
+                </div>
+
+
+                {% if form.name.errors %}
+
+                    <div class="form-error">
+
+                        {{ form.name.errors.0 }}
+
+                    </div>
+
+                {% endif %}
+
+
+            </div>
+
+
+
+            <!-- EMAIL -->
+
+            <div class="form-group">
+
+
+                <label
+                    for="{{ form.email.id_for_label }}"
+                >
+
+                    Email Address
+
+                </label>
+
+
+                <div class="input-wrapper">
+
+                    <i class="fa-solid fa-envelope"></i>
+
+
+                    {{ form.email }}
+
+                </div>
+
+
+                {% if form.email.errors %}
+
+                    <div class="form-error">
+
+                        {{ form.email.errors.0 }}
+
+                    </div>
+
+                {% endif %}
+
+
+            </div>
+
+
+
+            <!-- PASSWORD -->
+
+            <div class="form-group">
+
+
+                <label
+                    for="{{ form.password.id_for_label }}"
+                >
+
+                    Password
+
+                </label>
+
+
+                <div class="input-wrapper">
+
+                    <i class="fa-solid fa-lock"></i>
+
+
+                    {{ form.password }}
+
+
+                    <button
+                        type="button"
+                        class="password-toggle"
+                        onclick="toggleRegisterPassword(
+                            '{{ form.password.id_for_label }}',
+                            'passwordIcon'
+                        )"
+                    >
+
+                        <i
+                            id="passwordIcon"
+                            class="fa-solid fa-eye"
+                        ></i>
+
+                    </button>
+
+                </div>
+
+
+                {% if form.password.errors %}
+
+                    <div class="form-error">
+
+                        {{ form.password.errors.0 }}
+
+                    </div>
+
+                {% endif %}
+
+
+            </div>
+
+
+
+            <!-- CONFIRM PASSWORD -->
+
+            <div class="form-group">
+
+
+                <label
+                    for="{{ form.confirm_password.id_for_label }}"
+                >
+
+                    Confirm Password
+
+                </label>
+
+
+                <div class="input-wrapper">
+
+                    <i class="fa-solid fa-lock"></i>
+
+
+                    {{ form.confirm_password }}
+
+
+                    <button
+                        type="button"
+                        class="password-toggle"
+                        onclick="toggleRegisterPassword(
+                            '{{ form.confirm_password.id_for_label }}',
+                            'confirmPasswordIcon'
+                        )"
+                    >
+
+                        <i
+                            id="confirmPasswordIcon"
+                            class="fa-solid fa-eye"
+                        ></i>
+
+                    </button>
+
+                </div>
+
+
+                {% if form.confirm_password.errors %}
+
+                    <div class="form-error">
+
+                        {{ form.confirm_password.errors.0 }}
+
+                    </div>
+
+                {% endif %}
+
+
+            </div>
+
+
+
+            <!-- GENERAL ERRORS -->
+
+            {% if form.non_field_errors %}
+
+                <div class="form-error form-general-error">
+
+                    {{ form.non_field_errors.0 }}
+
+                </div>
+
+            {% endif %}
+
+
+
+            <!-- SUBMIT -->
+
+            <button
+                type="submit"
+                class="auth-submit"
+            >
+
+                <span>
+                    Create Account
+                </span>
+
+                <i class="fa-solid fa-arrow-right"></i>
+
+            </button>
+
+
+        </form>
+
+
+
+        <!-- =================================
+             LOGIN
+        ================================== -->
+
+        <div class="auth-switch">
+
+
+            <span>
+
+                Already have an account?
+
+            </span>
+
+
+            <a href="{% url 'patient_login' %}">
+
+                Sign in
+
+            </a>
+
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- =====================================
+         FOOTER
+    ====================================== -->
+
+    <div class="auth-footer">
+
+        <i class="fa-solid fa-shield-heart"></i>
+
+        Your information is securely handled.
+
+    </div>
+
+
+</main>
+
+
+
+<!-- =========================================
+     PASSWORD SCRIPT
+========================================= -->
+
+<script>
+
+function toggleRegisterPassword(
+    inputId,
+    iconId
+) {
+
+    const input =
+        document.getElementById(inputId);
+
+    const icon =
+        document.getElementById(iconId);
+
+
+    if (input.type === "password") {
+
+        input.type = "text";
+
+        icon.classList.remove(
+            "fa-eye"
+        );
+
+        icon.classList.add(
+            "fa-eye-slash"
+        );
+
+    }
+
+    else {
+
+        input.type = "password";
+
+        icon.classList.remove(
+            "fa-eye-slash"
+        );
+
+        icon.classList.add(
+            "fa-eye"
+        );
+
+    }
+
+}
+
+</script>
+
+
+</body>
+
+</html>

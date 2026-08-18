@@ -1,0 +1,400 @@
+{% extends "consultancy/base.html" %}
+
+
+{% block title %}
+    Booking Confirmed
+{% endblock %}
+
+
+{% block navigation %}
+
+<a href="{% url 'patient_dashboard' %}">
+
+    <i class="fa-solid fa-house"></i>
+
+    <span>
+        Dashboard
+    </span>
+
+</a>
+
+
+<a href="{% url 'doctor_categories' %}">
+
+    <i class="fa-solid fa-user-doctor"></i>
+
+    <span>
+        Find a Doctor
+    </span>
+
+</a>
+
+
+<a
+    class="active"
+    href="{% url 'my_bookings' %}"
+>
+
+    <i class="fa-solid fa-calendar-check"></i>
+
+    <span>
+        My Bookings
+    </span>
+
+</a>
+
+{% endblock %}
+
+
+{% block navigation_bottom %}
+
+<a href="{% url 'patient_logout' %}">
+
+    <i class="fa-solid fa-right-from-bracket"></i>
+
+    <span>
+        Logout
+    </span>
+
+</a>
+
+{% endblock %}
+
+
+{% block header %}
+
+<div class="user-area">
+
+    <div class="user-avatar confirmation-avatar">
+
+        <i class="fa-solid fa-check"></i>
+
+    </div>
+
+    <span class="user-name">
+
+        Booking Confirmed
+
+    </span>
+
+</div>
+
+{% endblock %}
+
+
+{% block content %}
+
+
+<div class="confirmation-wrapper">
+
+
+    <!-- =====================================
+         SUCCESS HEADER
+    ====================================== -->
+
+    <section class="confirmation-header">
+
+
+        <div class="success-circle">
+
+            <i class="fa-solid fa-check"></i>
+
+        </div>
+
+
+        <span class="confirmation-label">
+
+            APPOINTMENT SUCCESSFUL
+
+        </span>
+
+
+        <h1>
+
+            Booking Confirmed
+
+        </h1>
+
+
+        <p>
+
+            Your consultation has been successfully
+            scheduled.
+
+        </p>
+
+
+    </section>
+
+
+
+    <!-- =====================================
+         APPOINTMENT CARD
+    ====================================== -->
+
+    <section class="appointment-card glass">
+
+
+        <!-- CARD TOP -->
+
+        <div class="appointment-top">
+
+
+            <div>
+
+                <span class="appointment-label">
+
+                    CONSULTATION
+
+                </span>
+
+
+                <h2>
+
+                    Dr. {{ booking.doctor.user.name }}
+
+                </h2>
+
+
+                <p class="appointment-specialty">
+
+                    {{ booking.doctor.category.name }}
+
+                </p>
+
+            </div>
+
+
+            <div class="appointment-doctor-icon">
+
+                <i class="fa-solid fa-user-doctor"></i>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- DIVIDER -->
+
+        <div class="appointment-divider"></div>
+
+
+
+        <!-- BOOKING DETAILS -->
+
+        <div class="booking-details">
+
+
+            <div class="booking-detail">
+
+                <span>
+
+                    <i class="fa-solid fa-hashtag"></i>
+
+                    Booking ID
+
+                </span>
+
+
+                <strong class="booking-id">
+
+                    {{ booking.booking_id }}
+
+                </strong>
+
+            </div>
+
+
+
+            <div class="booking-detail">
+
+                <span>
+
+                    <i class="fa-solid fa-ticket"></i>
+
+                    Token
+
+                </span>
+
+
+                <strong class="token-number">
+
+                    #{{ booking.token_id }}
+
+                </strong>
+
+            </div>
+
+
+
+            <div class="booking-detail">
+
+                <span>
+
+                    <i class="fa-solid fa-calendar-day"></i>
+
+                    Date
+
+                </span>
+
+
+                <strong>
+
+                    {{ booking.slot.date|date:"d M Y" }}
+
+                </strong>
+
+            </div>
+
+
+
+            <div class="booking-detail">
+
+                <span>
+
+                    <i class="fa-solid fa-clock"></i>
+
+                    Time
+
+                </span>
+
+
+                <strong>
+
+                    {{ booking.slot.start_time|time:"h:i A" }}
+
+                    -
+
+                    {{ booking.slot.end_time|time:"h:i A" }}
+
+                </strong>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- DIVIDER -->
+
+        <div class="appointment-divider"></div>
+
+
+
+        <!-- FEE -->
+
+        <div class="appointment-fee">
+
+
+            <span>
+
+                Consultation Fee
+
+            </span>
+
+
+            <strong>
+
+                ₹{{ booking.consultation_fee }}
+
+            </strong>
+
+
+        </div>
+
+
+
+        <!-- STATUS -->
+
+        <div class="confirmed-badge">
+
+            <i class="fa-solid fa-circle-check"></i>
+
+            Appointment Confirmed
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- =====================================
+         REMINDER
+    ====================================== -->
+
+    <section class="appointment-reminder glass">
+
+
+        <div class="reminder-icon">
+
+            <i class="fa-solid fa-lightbulb"></i>
+
+        </div>
+
+
+        <div>
+
+            <h3>
+
+                Appointment reminder
+
+            </h3>
+
+
+            <p>
+
+                Please arrive a few minutes before
+                your scheduled consultation time and
+                keep your token number ready.
+
+            </p>
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- =====================================
+         ACTIONS
+    ====================================== -->
+
+    <div class="confirmation-actions">
+
+
+        <a
+            href="{% url 'my_bookings' %}"
+            class="primary-action"
+        >
+
+            <i class="fa-solid fa-calendar-check"></i>
+
+            View My Bookings
+
+        </a>
+
+
+        <a
+            href="{% url 'patient_dashboard' %}"
+            class="secondary-action"
+        >
+
+            <i class="fa-solid fa-house"></i>
+
+            Back to Dashboard
+
+        </a>
+
+
+    </div>
+
+
+</div>
+
+
+{% endblock %}

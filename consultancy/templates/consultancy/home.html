@@ -1,0 +1,2637 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>MediCare | Doctor Consultancy</title>
+
+
+    <!-- Google Fonts -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap"
+        rel="stylesheet">
+
+
+    <!-- Font Awesome -->
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+
+    <!-- Landing Page CSS -->
+
+    <link rel="stylesheet" href="{% static 'consultancy/css/home.css' %}">
+
+</head>
+
+
+<body>
+
+
+    <!-- ==================================================
+     ANIMATED BACKGROUND
+================================================== -->
+
+    <div class="landing-background">
+
+        <div class="landing-blob blob-one"></div>
+
+        <div class="landing-blob blob-two"></div>
+
+        <div class="landing-blob blob-three"></div>
+
+    </div>
+
+
+
+    <!-- ==================================================
+     NAVBAR
+================================================== -->
+
+    <header class="landing-navbar">
+
+
+        <div class="landing-nav-inner">
+
+
+            <!-- LOGO -->
+
+            <a href="{% url 'home' %}" class="landing-logo">
+
+                <div class="landing-logo-icon">
+
+                    <i class="fa-solid fa-heart-pulse"></i>
+
+                </div>
+
+
+                <div class="landing-logo-text">
+
+                    <strong>
+                        MediCare
+                    </strong>
+
+                    <span>
+                        Doctor Consultancy
+                    </span>
+
+                </div>
+
+            </a>
+
+
+
+            <!-- DESKTOP NAVIGATION -->
+
+            <nav class="landing-nav-links">
+
+
+                <a href="#home" class="landing-nav-active">
+
+                    Home
+
+                </a>
+
+
+                <a href="#features">
+
+                    Features
+
+                </a>
+
+
+                <a href="#how-it-works">
+
+                    How It Works
+
+                </a>
+
+
+                <a href="#doctors">
+
+                    Doctors
+
+                </a>
+
+
+            </nav>
+
+
+
+            <!-- NAV ACTIONS -->
+
+            <div class="landing-nav-actions">
+                <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+
+                    <i class="fa-solid fa-moon"></i>
+
+                </button>
+
+                <a href="{% url 'patient_login' %}" class="landing-login-button">
+
+                    Sign In
+
+                </a>
+
+
+                <a href="{% url 'doctor_login' %}" class="landing-doctor-button">
+
+                    <i class="fa-solid fa-stethoscope"></i>
+
+                    Doctor Portal
+
+                </a>
+
+
+            </div>
+
+
+
+            <!-- MOBILE MENU -->
+
+            <button type="button" class="landing-menu-button" id="landingMenuButton">
+
+                <i class="fa-solid fa-bars"></i>
+
+            </button>
+
+
+        </div>
+
+
+
+        <!-- MOBILE NAV -->
+
+        <div class="landing-mobile-menu" id="landingMobileMenu">
+
+
+            <a href="#home">
+
+                Home
+
+            </a>
+
+
+            <a href="#features">
+
+                Features
+
+            </a>
+
+
+            <a href="#how-it-works">
+
+                How It Works
+
+            </a>
+
+
+            <a href="#doctors">
+
+                Doctors
+
+            </a>
+
+
+            <div class="mobile-menu-divider"></div>
+
+            <button type="button" class="mobile-theme-button" id="mobileThemeToggle">
+
+                <span>
+
+                    <i class="fa-solid fa-moon"></i>
+
+                    Theme
+
+                </span>
+
+
+                <strong>
+                    Dark
+                </strong>
+
+            </button>
+            <a href="{% url 'patient_login' %}" class="mobile-login">
+
+                Patient Login
+
+            </a>
+
+
+            <a href="{% url 'doctor_login' %}" class="mobile-doctor">
+
+                Doctor Portal
+
+            </a>
+
+
+        </div>
+
+
+    </header>
+
+
+
+    <!-- ==================================================
+     HERO
+================================================== -->
+
+    <main id="home">
+
+
+        <section class="landing-hero">
+
+
+            <!-- ==============================================
+         HERO LEFT
+    =============================================== -->
+
+            <div class="hero-content">
+
+
+                <!-- SMALL LABEL -->
+
+                <div class="hero-label">
+
+                    <span class="hero-label-dot"></span>
+
+                    Healthcare made simpler
+
+                </div>
+
+
+
+                <!-- HEADING -->
+
+                <h1>
+
+                    Better care.
+
+                    <span>
+                        Better connection.
+                    </span>
+
+                </h1>
+
+
+
+                <!-- DESCRIPTION -->
+
+                <p class="hero-description">
+
+                    Find trusted doctors, choose a convenient
+                    consultation slot and book your token —
+                    all from one simple platform.
+
+                </p>
+
+
+
+                <!-- ACTIONS -->
+
+                <div class="hero-actions">
+
+
+                    <a href="{% url 'doctor_categories' %}" class="hero-primary-button">
+
+                        Find a Doctor
+
+                        <i class="fa-solid fa-arrow-right"></i>
+
+                    </a>
+
+
+                    <a href="{% url 'doctor_register' %}" class="hero-secondary-button">
+
+                        Join as Doctor
+
+                        <i class="fa-solid fa-user-doctor"></i>
+
+                    </a>
+
+
+                </div>
+
+
+
+                <!-- TRUST -->
+
+                <div class="hero-trust">
+
+
+                    <div class="hero-trust-avatars">
+
+
+                        <span>
+                            A
+                        </span>
+
+
+                        <span>
+                            R
+                        </span>
+
+
+                        <span>
+                            S
+                        </span>
+
+
+                        <span>
+                            +
+                        </span>
+
+
+                    </div>
+
+
+                    <div>
+
+                        <div class="hero-stars">
+
+                            ★★★★★
+
+                        </div>
+
+
+                        <p>
+
+                            Trusted by patients
+                            for easier consultations
+
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- ==============================================
+         HERO RIGHT
+    =============================================== -->
+
+            <div class="hero-visual">
+
+
+                <!-- ROTATING RING -->
+
+                <div class="hero-ring ring-one"></div>
+
+                <div class="hero-ring ring-two"></div>
+
+
+
+                <!-- MAIN DOCTOR CARD -->
+
+                <div class="hero-doctor-card">
+
+
+                    <!-- CARD HEADER -->
+
+                    <div class="hero-card-top">
+
+
+                        <div class="hero-online">
+
+                            <span></span>
+
+                            Available today
+
+                        </div>
+
+
+                        <button type="button" class="hero-heart">
+
+                            <i class="fa-regular fa-heart"></i>
+
+                        </button>
+
+
+                    </div>
+
+
+
+                    <!-- DOCTOR AVATAR -->
+
+                    <div class="hero-doctor-avatar">
+
+                        <i class="fa-solid fa-user-doctor"></i>
+
+                    </div>
+
+
+
+                    <!-- DOCTOR INFO -->
+
+                    <div class="hero-doctor-info">
+
+
+                        <span class="hero-doctor-category">
+
+                            CARDIOLOGY
+
+                        </span>
+
+
+                        <h3>
+
+                            Dr. Sarah Wilson
+
+                        </h3>
+
+
+                        <p>
+
+                            MBBS, MD · 8 Years Experience
+
+                        </p>
+
+
+                    </div>
+
+
+
+                    <!-- RATING -->
+
+                    <div class="hero-doctor-rating">
+
+
+                        <span>
+
+                            ★ 4.9
+
+                        </span>
+
+
+                        <small>
+
+                            128 consultations
+
+                        </small>
+
+
+                    </div>
+
+
+
+                    <!-- DIVIDER -->
+
+                    <div class="hero-card-divider"></div>
+
+
+
+                    <!-- NEXT SLOT -->
+
+                    <div class="hero-next-slot">
+
+
+                        <div>
+
+                            <span>
+
+                                NEXT AVAILABLE
+
+                            </span>
+
+
+                            <strong>
+
+                                Tomorrow · 10:30 AM
+
+                            </strong>
+
+                        </div>
+
+
+                        <div class="hero-token">
+
+                            #07
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- FLOATING NOTIFICATION -->
+
+                <div class="hero-floating-card floating-booking">
+
+
+                    <div class="floating-icon">
+
+                        <i class="fa-solid fa-calendar-check"></i>
+
+                    </div>
+
+
+                    <div>
+
+                        <span>
+                            Booking confirmed
+                        </span>
+
+                        <strong>
+                            Token #07
+                        </strong>
+
+                    </div>
+
+
+                    <i class="fa-solid fa-circle-check floating-check"></i>
+
+
+                </div>
+
+
+
+                <!-- FLOATING SHIELD -->
+
+                <div class="hero-floating-card floating-secure">
+
+
+                    <div class="secure-icon">
+
+                        <i class="fa-solid fa-shield-heart"></i>
+
+                    </div>
+
+
+                    <div>
+
+                        <strong>
+                            Secure
+                        </strong>
+
+                        <span>
+                            Healthcare platform
+                        </span>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- FLOATING PLUS -->
+
+                <div class="hero-floating-plus plus-one">
+
+                    +
+
+                </div>
+
+
+                <div class="hero-floating-plus plus-two">
+
+                    +
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+        <!-- ==================================================
+     FEATURES
+================================================== -->
+
+        <section class="landing-features" id="features">
+
+
+            <!-- SECTION HEADING -->
+
+            <div class="landing-section-heading reveal">
+
+
+                <span class="landing-section-label">
+
+                    WHY MEDICARE
+
+                </span>
+
+
+                <h2>
+
+                    Everything you need
+                    <span>for better consultations.</span>
+
+                </h2>
+
+
+                <p>
+
+                    Simple tools designed to make
+                    doctor consultations easier for
+                    both patients and doctors.
+
+                </p>
+
+
+            </div>
+
+
+
+            <!-- FEATURE GRID -->
+
+            <div class="feature-grid">
+
+
+                <!-- =========================================
+             FEATURE 1
+        ========================================== -->
+
+                <article class="feature-card feature-card-large reveal">
+
+
+                    <div class="feature-card-top">
+
+
+                        <div class="feature-icon feature-blue">
+
+                            <i class="fa-solid fa-user-doctor"></i>
+
+                        </div>
+
+
+                        <span class="feature-number">
+
+                            01
+
+                        </span>
+
+
+                    </div>
+
+
+                    <div class="feature-card-content">
+
+
+                        <h3>
+
+                            Trusted Doctors
+
+                        </h3>
+
+
+                        <p>
+
+                            Discover doctors by medical
+                            category and explore their
+                            professional information before
+                            booking a consultation.
+
+                        </p>
+
+
+                    </div>
+
+
+                    <div class="feature-decoration">
+
+                        <div class="mini-doctor-card">
+
+                            <div class="mini-doctor-avatar">
+
+                                <i class="fa-solid fa-user-doctor"></i>
+
+                            </div>
+
+
+                            <div>
+
+                                <strong>
+                                    Dr. Specialist
+                                </strong>
+
+                                <span>
+                                    Verified Doctor
+                                </span>
+
+                            </div>
+
+
+                            <i class="fa-solid fa-circle-check"></i>
+
+                        </div>
+
+                    </div>
+
+
+                </article>
+
+
+
+                <!-- =========================================
+             FEATURE 2
+        ========================================== -->
+
+                <article class="feature-card reveal">
+
+
+                    <div class="feature-card-top">
+
+
+                        <div class="feature-icon feature-green">
+
+                            <i class="fa-solid fa-ticket"></i>
+
+                        </div>
+
+
+                        <span class="feature-number">
+
+                            02
+
+                        </span>
+
+
+                    </div>
+
+
+                    <h3>
+
+                        Smart Token Booking
+
+                    </h3>
+
+
+                    <p>
+
+                        Choose an available appointment
+                        slot and receive your unique
+                        consultation token instantly.
+
+                    </p>
+
+
+                    <div class="feature-token-animation">
+
+                        <span>
+                            TOKEN
+                        </span>
+
+                        <strong>
+                            #07
+                        </strong>
+
+                    </div>
+
+
+                </article>
+
+
+
+                <!-- =========================================
+             FEATURE 3
+        ========================================== -->
+
+                <article class="feature-card reveal">
+
+
+                    <div class="feature-card-top">
+
+
+                        <div class="feature-icon feature-orange">
+
+                            <i class="fa-solid fa-clock"></i>
+
+                        </div>
+
+
+                        <span class="feature-number">
+
+                            03
+
+                        </span>
+
+
+                    </div>
+
+
+                    <h3>
+
+                        Convenient Sessions
+
+                    </h3>
+
+
+                    <p>
+
+                        Doctors can organize morning,
+                        afternoon and evening sessions
+                        with individual time slots.
+
+                    </p>
+
+
+                    <div class="feature-time-animation">
+
+
+                        <div>
+
+                            <i class="fa-solid fa-sun"></i>
+
+                            Morning
+
+                        </div>
+
+
+                        <div>
+
+                            <i class="fa-solid fa-cloud-sun"></i>
+
+                            Afternoon
+
+                        </div>
+
+
+                        <div>
+
+                            <i class="fa-solid fa-moon"></i>
+
+                            Evening
+
+                        </div>
+
+
+                    </div>
+
+
+                </article>
+
+
+
+                <!-- =========================================
+             FEATURE 4
+        ========================================== -->
+
+                <article class="feature-card feature-card-large feature-security reveal">
+
+
+                    <div class="feature-card-top">
+
+
+                        <div class="feature-icon feature-purple">
+
+                            <i class="fa-solid fa-shield-heart"></i>
+
+                        </div>
+
+
+                        <span class="feature-number">
+
+                            04
+
+                        </span>
+
+
+                    </div>
+
+
+                    <div class="feature-card-content">
+
+
+                        <h3>
+
+                            Secure Healthcare
+
+                        </h3>
+
+
+                        <p>
+
+                            Your account and appointment
+                            information are handled through
+                            a secure platform designed
+                            around your consultation journey.
+
+                        </p>
+
+
+                    </div>
+
+
+                    <div class="security-visual">
+
+
+                        <div class="security-circle">
+
+                            <i class="fa-solid fa-lock"></i>
+
+                        </div>
+
+
+                        <span class="security-pulse"></span>
+
+
+                        <span class="security-pulse pulse-two"></span>
+
+
+                    </div>
+
+
+                </article>
+
+
+            </div>
+
+
+        </section>
+        <!-- ==================================================
+     HOW IT WORKS
+================================================== -->
+
+        <section class="landing-how-it-works" id="how-it-works">
+
+
+            <!-- SECTION HEADING -->
+
+            <div class="landing-section-heading reveal">
+
+                <span class="landing-section-label">
+
+                    SIMPLE PROCESS
+
+                </span>
+
+
+                <h2>
+
+                    From search to
+                    <span>consultation in minutes.</span>
+
+                </h2>
+
+
+                <p>
+
+                    MediCare keeps the appointment
+                    process simple from beginning to end.
+
+                </p>
+
+            </div>
+
+
+
+            <!-- PROCESS -->
+
+            <div class="process-container">
+
+
+                <!-- STEP 1 -->
+
+                <article class="process-step reveal">
+
+
+                    <div class="process-number">
+
+                        01
+
+                    </div>
+
+
+                    <div class="process-icon process-blue">
+
+                        <i class="fa-solid fa-magnifying-glass"></i>
+
+                    </div>
+
+
+                    <h3>
+
+                        Find a Doctor
+
+                    </h3>
+
+
+                    <p>
+
+                        Browse doctors by their
+                        medical category.
+
+                    </p>
+
+
+                    <div class="process-mini-label">
+
+                        EXPLORE DOCTORS
+
+                    </div>
+
+
+                </article>
+
+
+
+                <!-- CONNECTOR -->
+
+                <div class="process-connector">
+
+                    <span></span>
+
+                </div>
+
+
+
+                <!-- STEP 2 -->
+
+                <article class="process-step reveal">
+
+
+                    <div class="process-number">
+
+                        02
+
+                    </div>
+
+
+                    <div class="process-icon process-green">
+
+                        <i class="fa-solid fa-calendar-days"></i>
+
+                    </div>
+
+
+                    <h3>
+
+                        Choose a Slot
+
+                    </h3>
+
+
+                    <p>
+
+                        Select a convenient date
+                        and available time.
+
+                    </p>
+
+
+                    <div class="process-mini-label">
+
+                        PICK YOUR TIME
+
+                    </div>
+
+
+                </article>
+
+
+
+                <!-- CONNECTOR -->
+
+                <div class="process-connector">
+
+                    <span></span>
+
+                </div>
+
+
+
+                <!-- STEP 3 -->
+
+                <article class="process-step reveal">
+
+
+                    <div class="process-number">
+
+                        03
+
+                    </div>
+
+
+                    <div class="process-icon process-orange">
+
+                        <i class="fa-solid fa-ticket"></i>
+
+                    </div>
+
+
+                    <h3>
+
+                        Get Your Token
+
+                    </h3>
+
+
+                    <p>
+
+                        Confirm your booking and
+                        receive your token number.
+
+                    </p>
+
+
+                    <div class="process-mini-label">
+
+                        TOKEN CONFIRMED
+
+                    </div>
+
+
+                </article>
+
+
+
+                <!-- CONNECTOR -->
+
+                <div class="process-connector">
+
+                    <span></span>
+
+                </div>
+
+
+
+                <!-- STEP 4 -->
+
+                <article class="process-step reveal">
+
+
+                    <div class="process-number">
+
+                        04
+
+                    </div>
+
+
+                    <div class="process-icon process-purple">
+
+                        <i class="fa-solid fa-user-doctor"></i>
+
+                    </div>
+
+
+                    <h3>
+
+                        Meet Your Doctor
+
+                    </h3>
+
+
+                    <p>
+
+                        Arrive for your scheduled
+                        consultation.
+
+                    </p>
+
+
+                    <div class="process-mini-label">
+
+                        CONSULTATION
+
+                    </div>
+
+
+                </article>
+
+
+            </div>
+
+
+
+            <!-- BOTTOM MESSAGE -->
+
+            <div class="process-bottom-card reveal">
+
+
+                <div class="process-bottom-icon">
+
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+
+                </div>
+
+
+                <div>
+
+                    <strong>
+
+                        That's it. No complicated process.
+
+                    </strong>
+
+
+                    <p>
+
+                        Find, book and manage your
+                        consultation from one place.
+
+                    </p>
+
+                </div>
+
+
+                <a href="{% url 'doctor_categories' %}" class="process-bottom-button">
+
+                    Start Booking
+
+                    <i class="fa-solid fa-arrow-right"></i>
+
+                </a>
+
+
+            </div>
+
+
+        </section>
+
+        <!-- ==================================================
+     DOCTOR SHOWCASE
+================================================== -->
+
+        <section class="landing-doctors" id="doctors">
+
+
+            <!-- SECTION HEADING -->
+
+            <div class="landing-section-heading reveal">
+
+                <span class="landing-section-label">
+
+                    OUR SPECIALISTS
+
+                </span>
+
+
+                <h2>
+
+                    Meet our
+                    <span>trusted doctors.</span>
+
+                </h2>
+
+
+                <p>
+
+                    Explore experienced healthcare
+                    professionals and find the right
+                    specialist for your needs.
+
+                </p>
+
+            </div>
+
+
+
+            <!-- DOCTOR GRID -->
+
+            <div class="doctor-showcase-grid">
+
+
+                {% for doctor in doctors %}
+
+
+                <article class="showcase-doctor-card reveal">
+
+
+                    <!-- CARD TOP -->
+
+                    <div class="showcase-card-top">
+
+
+                        <div class="showcase-availability">
+
+
+                            <span></span>
+
+
+                            Available
+
+                        </div>
+
+
+                        <div class="showcase-rating">
+
+                            <i class="fa-solid fa-star"></i>
+
+                            4.9
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <!-- DOCTOR IMAGE -->
+
+                    <div class="showcase-doctor-avatar">
+
+
+                        <i class="fa-solid fa-user-doctor"></i>
+
+
+                        <div class="showcase-verified">
+
+                            <i class="fa-solid fa-check"></i>
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <!-- DOCTOR INFO -->
+
+                    <div class="showcase-doctor-info">
+
+
+                        <span class="showcase-specialization">
+
+                            {{ doctor.category.name }}
+
+                        </span>
+
+
+                        <h3>
+
+                            Dr. {{ doctor.user.name }}
+
+                        </h3>
+
+
+                        <p>
+
+                            {{ doctor.qualification }}
+
+                        </p>
+
+
+                    </div>
+
+
+
+                    <!-- DETAILS -->
+
+                    <div class="showcase-details">
+
+
+                        <div>
+
+                            <i class="fa-solid fa-briefcase"></i>
+
+                            <span>
+
+                                {{ doctor.experience }} years
+
+                            </span>
+
+                        </div>
+
+
+                        <div>
+
+                            <i class="fa-solid fa-indian-rupee-sign"></i>
+
+                            <span>
+
+                                ₹{{ doctor.consultation_fee }}
+
+                            </span>
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <!-- ACTION -->
+
+                    <a href="{% url 'doctor_slots' doctor.id %}" class="showcase-view-button">
+
+                        View Availability
+
+                        <i class="fa-solid fa-arrow-right"></i>
+
+                    </a>
+
+
+                </article>
+
+
+                {% empty %}
+
+
+                <!-- EMPTY STATE -->
+
+                <div class="doctor-empty-state">
+
+
+                    <div>
+
+                        <i class="fa-solid fa-user-doctor"></i>
+
+                    </div>
+
+
+                    <h3>
+
+                        Our specialists are joining soon.
+
+                    </h3>
+
+
+                    <p>
+
+                        New doctors will appear here
+                        once they are approved.
+
+                    </p>
+
+
+                </div>
+
+
+                {% endfor %}
+
+
+            </div>
+
+
+
+            <!-- VIEW ALL -->
+
+            {% if doctors %}
+
+            <div class="doctor-showcase-footer reveal">
+
+
+                <a href="{% url 'doctor_categories' %}" class="view-all-doctors">
+
+                    Explore All Doctors
+
+                    <i class="fa-solid fa-arrow-right"></i>
+
+                </a>
+
+
+            </div>
+
+            {% endif %}
+
+
+        </section>
+        <!-- ==================================================
+     TRUST STATISTICS
+================================================== -->
+
+        <section class="landing-stats">
+
+
+            <div class="stats-glow"></div>
+
+
+            <div class="stats-heading reveal">
+
+
+                <span>
+
+                    MEDICARE AT A GLANCE
+
+                </span>
+
+
+                <h2>
+
+                    Healthcare that
+                    keeps growing.
+
+                </h2>
+
+
+                <p>
+
+                    Our platform brings patients and
+                    healthcare professionals together
+                    through a simpler consultation journey.
+
+                </p>
+
+
+            </div>
+
+
+
+            <div class="stats-grid">
+
+
+                <!-- DOCTORS -->
+
+                <div class="stat-card reveal">
+
+
+                    <div class="stat-icon">
+
+                        <i class="fa-solid fa-user-doctor"></i>
+
+                    </div>
+
+
+                    <div class="stat-number">
+
+                        <span>
+                            {{ doctor_count }}
+
+                        </span>
+
+                        <b>+</b>
+
+                    </div>
+
+
+                    <span class="stat-label">
+
+                        Approved Doctors
+
+                    </span>
+
+
+                </div>
+
+
+
+                <!-- PATIENTS -->
+
+                <div class="stat-card reveal">
+
+
+                    <div class="stat-icon stat-green">
+
+                        <i class="fa-solid fa-users"></i>
+
+                    </div>
+
+
+                    <div class="stat-number">
+
+                        <span>
+                            {{ patient_count }}
+
+                        </span>
+
+                        <b>+</b>
+
+                    </div>
+
+
+                    <span class="stat-label">
+
+                        Registered Patients
+
+                    </span>
+
+
+                </div>
+
+
+
+                <!-- CATEGORIES -->
+
+                <div class="stat-card reveal">
+
+
+                    <div class="stat-icon stat-orange">
+
+                        <i class="fa-solid fa-layer-group"></i>
+
+                    </div>
+
+
+                    <div class="stat-number">
+
+                        <span>
+                            {{ category_count }}
+                        </span>
+
+                        <b>+</b>
+
+                    </div>
+
+
+                    <span class="stat-label">
+
+                        Medical Categories
+
+                    </span>
+
+
+                </div>
+
+
+
+                <!-- BOOKINGS -->
+
+                <div class="stat-card reveal">
+
+
+                    <div class="stat-icon stat-purple">
+
+                        <i class="fa-solid fa-calendar-check"></i>
+
+                    </div>
+
+
+                    <div class="stat-number">
+
+                        <span>
+                            {{ booking_count }}
+                        </span>
+
+                        <b>+</b>
+
+                    </div>
+
+
+                    <span class="stat-label">
+
+                        Confirmed Bookings
+
+                    </span>
+
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+        <!-- ==================================================
+     PATIENT / DOCTOR CTA
+================================================== -->
+
+        <section class="landing-user-cta">
+
+
+            <div class="cta-heading reveal">
+
+                <span>
+                    YOUR HEALTHCARE JOURNEY
+                </span>
+
+                <h2>
+
+                    Choose how you want
+                    <strong>to get started.</strong>
+
+                </h2>
+
+            </div>
+
+
+
+            <div class="cta-choice-grid">
+
+
+                <!-- =========================================
+             PATIENT
+        ========================================== -->
+
+                <article class="cta-choice-card patient-cta reveal">
+
+
+                    <div class="cta-card-glow"></div>
+
+
+                    <div class="cta-card-icon">
+
+                        <i class="fa-solid fa-heart-pulse"></i>
+
+                    </div>
+
+
+                    <span class="cta-card-label">
+
+                        FOR PATIENTS
+
+                    </span>
+
+
+                    <h3>
+
+                        Find the right doctor
+                        for your needs.
+
+                    </h3>
+
+
+                    <p>
+
+                        Browse medical categories,
+                        explore doctors and book an
+                        available consultation token.
+
+                    </p>
+
+
+                    <div class="cta-benefits">
+
+                        <span>
+
+                            <i class="fa-solid fa-check"></i>
+
+                            Explore specialists
+
+                        </span>
+
+
+                        <span>
+
+                            <i class="fa-solid fa-check"></i>
+
+                            Choose your slot
+
+                        </span>
+
+
+                        <span>
+
+                            <i class="fa-solid fa-check"></i>
+
+                            Get your token
+
+                        </span>
+
+                    </div>
+
+
+                    <a href="{% url 'doctor_categories' %}" class="cta-main-button">
+
+                        Find a Doctor
+
+                        <i class="fa-solid fa-arrow-right"></i>
+
+                    </a>
+
+
+                    <div class="cta-floating-icon cta-float-one">
+
+                        <i class="fa-solid fa-calendar-check"></i>
+
+                    </div>
+
+
+                    <div class="cta-floating-icon cta-float-two">
+
+                        <i class="fa-solid fa-ticket"></i>
+
+                    </div>
+
+
+                </article>
+
+
+
+                <!-- =========================================
+             DOCTOR
+        ========================================== -->
+
+                <article class="cta-choice-card doctor-cta reveal">
+
+
+                    <div class="cta-card-glow"></div>
+
+
+                    <div class="cta-card-icon">
+
+                        <i class="fa-solid fa-user-doctor"></i>
+
+                    </div>
+
+
+                    <span class="cta-card-label">
+
+                        FOR DOCTORS
+
+                    </span>
+
+
+                    <h3>
+
+                        Grow your practice
+                        with MediCare.
+
+                    </h3>
+
+
+                    <p>
+
+                        Create your professional profile,
+                        manage availability and organize
+                        patient consultations.
+
+                    </p>
+
+
+                    <div class="cta-benefits">
+
+                        <span>
+
+                            <i class="fa-solid fa-check"></i>
+
+                            Professional profile
+
+                        </span>
+
+
+                        <span>
+
+                            <i class="fa-solid fa-check"></i>
+
+                            Manage availability
+
+                        </span>
+
+
+                        <span>
+
+                            <i class="fa-solid fa-check"></i>
+
+                            Manage bookings
+
+                        </span>
+
+                    </div>
+
+
+                    <a href="{% url 'doctor_register' %}" class="cta-main-button">
+
+                        Join as Doctor
+
+                        <i class="fa-solid fa-arrow-right"></i>
+
+                    </a>
+
+
+                    <div class="cta-floating-icon cta-float-three">
+
+                        <i class="fa-solid fa-user-plus"></i>
+
+                    </div>
+
+
+                    <div class="cta-floating-icon cta-float-four">
+
+                        <i class="fa-solid fa-stethoscope"></i>
+
+                    </div>
+
+
+                </article>
+
+
+            </div>
+
+
+        </section>
+        <!-- ==================================================
+     FINAL CTA
+================================================== -->
+
+        <section class="landing-final-cta">
+
+
+            <div class="final-cta-glow final-glow-one"></div>
+
+            <div class="final-cta-glow final-glow-two"></div>
+
+
+            <div class="final-cta-content reveal">
+
+
+                <div class="final-cta-icon">
+
+                    <i class="fa-solid fa-heart-pulse"></i>
+
+                </div>
+
+
+                <span class="final-cta-label">
+
+                    YOUR HEALTHCARE JOURNEY STARTS HERE
+
+                </span>
+
+
+                <h2>
+
+                    Better healthcare is
+                    <span>just a click away.</span>
+
+                </h2>
+
+
+                <p>
+
+                    Find a doctor, choose your preferred
+                    consultation slot and take the next
+                    step toward better care.
+
+                </p>
+
+
+                <div class="final-cta-actions">
+
+
+                    <a href="{% url 'doctor_categories' %}" class="final-primary-button">
+
+                        Find a Doctor
+
+                        <i class="fa-solid fa-arrow-right"></i>
+
+                    </a>
+
+
+                    <a href="{% url 'patient_register' %}" class="final-secondary-button">
+
+                        Create Patient Account
+
+                    </a>
+
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+        <!-- ==================================================
+     FOOTER
+================================================== -->
+
+        <footer class="landing-footer">
+
+
+            <div class="footer-main">
+
+
+                <!-- =========================================
+             BRAND
+        ========================================== -->
+
+                <div class="footer-brand">
+
+
+                    <a href="{% url 'home' %}" class="landing-logo">
+
+
+                        <div class="landing-logo-icon">
+
+                            <i class="fa-solid fa-heart-pulse"></i>
+
+                        </div>
+
+
+                        <div class="landing-logo-text">
+
+                            <strong>
+                                MediCare
+                            </strong>
+
+                            <span>
+                                Doctor Consultancy
+                            </span>
+
+                        </div>
+
+
+                    </a>
+
+
+                    <p>
+
+                        Making doctor consultations
+                        simpler, more accessible and
+                        easier to manage.
+
+                    </p>
+
+
+                    <div class="footer-socials">
+
+
+                        <a href="#" aria-label="Instagram">
+
+                            <i class="fa-brands fa-instagram"></i>
+
+                        </a>
+
+
+                        <a href="#" aria-label="Facebook">
+
+                            <i class="fa-brands fa-facebook-f"></i>
+
+                        </a>
+
+
+                        <a href="#" aria-label="Twitter">
+
+                            <i class="fa-brands fa-x-twitter"></i>
+
+                        </a>
+
+
+                        <a href="#" aria-label="LinkedIn">
+
+                            <i class="fa-brands fa-linkedin-in"></i>
+
+                        </a>
+
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- =========================================
+             PLATFORM
+        ========================================== -->
+
+                <div class="footer-column">
+
+
+                    <h3>
+                        Platform
+                    </h3>
+
+
+                    <a href="#features">
+                        Features
+                    </a>
+
+
+                    <a href="#how-it-works">
+                        How It Works
+                    </a>
+
+
+                    <a href="#doctors">
+                        Doctors
+                    </a>
+
+
+                    <a href="{% url 'doctor_categories' %}">
+                        Find a Doctor
+                    </a>
+
+
+                </div>
+
+
+
+                <!-- =========================================
+             PATIENTS
+        ========================================== -->
+
+                <div class="footer-column">
+
+
+                    <h3>
+                        Patients
+                    </h3>
+
+
+                    <a href="{% url 'patient_login' %}">
+                        Patient Login
+                    </a>
+
+
+                    <a href="{% url 'patient_register' %}">
+                        Create Account
+                    </a>
+
+
+                    <a href="{% url 'doctor_categories' %}">
+                        Browse Doctors
+                    </a>
+
+
+                    <a href="#">
+                        My Bookings
+                    </a>
+
+
+                </div>
+
+
+
+                <!-- =========================================
+             DOCTORS
+        ========================================== -->
+
+                <div class="footer-column">
+
+
+                    <h3>
+                        Doctors
+                    </h3>
+
+
+                    <a href="{% url 'doctor_login' %}">
+                        Doctor Login
+                    </a>
+
+
+                    <a href="{% url 'doctor_register' %}">
+                        Join MediCare
+                    </a>
+
+
+                    <a href="#">
+                        Availability
+                    </a>
+
+
+                    <a href="#">
+                        Doctor Portal
+                    </a>
+
+
+                </div>
+
+
+
+                <!-- =========================================
+             CONTACT
+        ========================================== -->
+
+                <div class="footer-column footer-contact">
+
+
+                    <h3>
+                        Contact
+                    </h3>
+
+
+                    <div>
+
+                        <i class="fa-solid fa-envelope"></i>
+
+                        <span>
+                            support@medicare.com
+                        </span>
+
+                    </div>
+
+
+                    <div>
+
+                        <i class="fa-solid fa-phone"></i>
+
+                        <span>
+                            +91 9447678573
+                        </span>
+
+                    </div>
+
+
+                    <div>
+
+                        <i class="fa-solid fa-location-dot"></i>
+
+                        <span>
+                            Kerala, India
+                        </span>
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- =========================================
+         FOOTER BOTTOM
+    ========================================== -->
+
+            <div class="footer-bottom">
+
+
+                <span>
+
+                    © 2026 MediCare.
+                    All rights reserved.
+
+                </span>
+
+
+                <div>
+
+
+                    <a href="#">
+                        Privacy
+                    </a>
+
+
+                    <a href="#">
+                        Terms
+                    </a>
+
+
+                    <a href="#">
+                        Help
+                    </a>
+
+
+                </div>
+
+
+            </div>
+
+
+        </footer>
+    </main>
+
+
+
+    <!-- ==================================================
+     JAVASCRIPT
+================================================== -->
+
+    <script>
+
+        const menuButton =
+            document.getElementById(
+                "landingMenuButton"
+            );
+
+        const mobileMenu =
+            document.getElementById(
+                "landingMobileMenu"
+            );
+
+
+        menuButton.addEventListener(
+            "click",
+            function () {
+
+                mobileMenu.classList.toggle(
+                    "mobile-menu-open"
+                );
+
+
+                const icon =
+                    menuButton.querySelector("i");
+
+
+                if (
+                    mobileMenu.classList.contains(
+                        "mobile-menu-open"
+                    )
+                ) {
+
+                    icon.classList.remove(
+                        "fa-bars"
+                    );
+
+                    icon.classList.add(
+                        "fa-xmark"
+                    );
+
+                }
+
+                else {
+
+                    icon.classList.remove(
+                        "fa-xmark"
+                    );
+
+                    icon.classList.add(
+                        "fa-bars"
+                    );
+
+                }
+
+            }
+        );
+
+
+
+        /* Close mobile menu after clicking link */
+
+        const mobileLinks =
+            mobileMenu.querySelectorAll("a");
+
+
+        mobileLinks.forEach(
+            function (link) {
+
+                link.addEventListener(
+                    "click",
+                    function () {
+
+                        mobileMenu.classList.remove(
+                            "mobile-menu-open"
+                        );
+
+                        const icon =
+                            menuButton.querySelector("i");
+
+
+                        icon.classList.remove(
+                            "fa-xmark"
+                        );
+
+                        icon.classList.add(
+                            "fa-bars"
+                        );
+
+                    }
+                );
+
+            }
+        );
+
+    </script>
+
+    <script>
+
+        /* =========================================
+           SCROLL REVEAL
+        ========================================= */
+
+        const revealElements =
+            document.querySelectorAll(
+                ".reveal"
+            );
+
+
+        const revealObserver =
+            new IntersectionObserver(
+                function (entries) {
+
+                    entries.forEach(
+                        function (entry) {
+
+                            if (
+                                entry.isIntersecting
+                            ) {
+
+                                entry.target.classList.add(
+                                    "reveal-visible"
+                                );
+
+                                revealObserver.unobserve(
+                                    entry.target
+                                );
+
+                            }
+
+                        }
+                    );
+
+                },
+                {
+                    threshold: 0.12
+                }
+            );
+
+
+        revealElements.forEach(
+            function (element) {
+
+                revealObserver.observe(
+                    element
+                );
+
+            }
+        );
+
+    </script>
+    <script>
+
+/* =========================================
+   THEME SYSTEM
+========================================= */
+
+const themeToggle =
+    document.getElementById(
+        "themeToggle"
+    );
+
+
+const mobileThemeToggle =
+    document.getElementById(
+        "mobileThemeToggle"
+    );
+
+
+/*
+    Get theme icon
+*/
+
+const themeIcon =
+    themeToggle.querySelector("i");
+
+
+const mobileThemeIcon =
+    mobileThemeToggle.querySelector("i");
+
+
+const mobileThemeText =
+    mobileThemeToggle.querySelector("strong");
+
+
+
+/*
+    Change theme
+*/
+
+function setTheme(theme) {
+
+
+    if (theme === "dark") {
+
+        document.body.classList.add(
+            "dark-theme"
+        );
+
+
+        themeIcon.classList.remove(
+            "fa-moon"
+        );
+
+
+        themeIcon.classList.add(
+            "fa-sun"
+        );
+
+
+        mobileThemeIcon.classList.remove(
+            "fa-moon"
+        );
+
+
+        mobileThemeIcon.classList.add(
+            "fa-sun"
+        );
+
+
+        mobileThemeText.textContent =
+            "Light";
+
+
+    }
+
+    else {
+
+        document.body.classList.remove(
+            "dark-theme"
+        );
+
+
+        themeIcon.classList.remove(
+            "fa-sun"
+        );
+
+
+        themeIcon.classList.add(
+            "fa-moon"
+        );
+
+
+        mobileThemeIcon.classList.remove(
+            "fa-sun"
+        );
+
+
+        mobileThemeIcon.classList.add(
+            "fa-moon"
+        );
+
+
+        mobileThemeText.textContent =
+            "Dark";
+
+    }
+
+
+    /*
+        Save user's choice
+    */
+
+    localStorage.setItem(
+        "medicare-theme",
+        theme
+    );
+
+}
+
+
+
+/*
+    Main theme button
+*/
+
+themeToggle.addEventListener(
+    "click",
+    function() {
+
+        const currentTheme =
+            document.body.classList.contains(
+                "dark-theme"
+            )
+                ? "dark"
+                : "light";
+
+
+        const newTheme =
+            currentTheme === "dark"
+                ? "light"
+                : "dark";
+
+
+        setTheme(newTheme);
+
+    }
+);
+
+
+
+/*
+    Mobile theme button
+*/
+
+mobileThemeToggle.addEventListener(
+    "click",
+    function() {
+
+        const currentTheme =
+            document.body.classList.contains(
+                "dark-theme"
+            )
+                ? "dark"
+                : "light";
+
+
+        const newTheme =
+            currentTheme === "dark"
+                ? "light"
+                : "dark";
+
+
+        setTheme(newTheme);
+
+    }
+);
+
+
+
+/*
+    Restore saved theme
+*/
+
+const savedTheme =
+    localStorage.getItem(
+        "medicare-theme"
+    );
+
+
+if (savedTheme) {
+
+    setTheme(savedTheme);
+
+}
+
+else {
+
+    setTheme("light");
+
+}
+
+</script>
+</body>
+
+</html>

@@ -1,0 +1,500 @@
+{% extends "consultancy/base.html" %}
+
+
+{% block title %}
+    Appointment Slots
+{% endblock %}
+
+
+{% block navigation %}
+
+<a href="{% url 'patient_dashboard' %}">
+
+    <i class="fa-solid fa-house"></i>
+
+    <span>
+        Dashboard
+    </span>
+
+</a>
+
+
+<a
+    class="active"
+    href="{% url 'doctor_categories' %}"
+>
+
+    <i class="fa-solid fa-user-doctor"></i>
+
+    <span>
+        Find a Doctor
+    </span>
+
+</a>
+
+
+<a href="{% url 'my_bookings' %}">
+
+    <i class="fa-solid fa-calendar-check"></i>
+
+    <span>
+        My Bookings
+    </span>
+
+</a>
+
+{% endblock %}
+
+
+{% block navigation_bottom %}
+
+<a href="{% url 'patient_logout' %}">
+
+    <i class="fa-solid fa-right-from-bracket"></i>
+
+    <span>
+        Logout
+    </span>
+
+</a>
+
+{% endblock %}
+
+
+{% block header %}
+
+<div class="user-area">
+
+    <div class="user-avatar">
+
+        <i class="fa-solid fa-user"></i>
+
+    </div>
+
+    <span class="user-name">
+
+        Appointment
+
+    </span>
+
+</div>
+
+{% endblock %}
+
+
+{% block content %}
+
+
+<!-- =========================================
+     BACK
+========================================= -->
+
+<a
+    href="{% url 'doctors_by_category' doctor.category.id %}"
+    class="slot-back"
+>
+
+    <i class="fa-solid fa-arrow-left"></i>
+
+    Back to Doctors
+
+</a>
+
+
+
+<!-- =========================================
+     DOCTOR PROFILE
+========================================= -->
+
+<section class="slot-doctor-card glass">
+
+
+    <div class="slot-doctor-avatar">
+
+        <i class="fa-solid fa-user-doctor"></i>
+
+    </div>
+
+
+    <div class="slot-doctor-info">
+
+        <span class="slot-label">
+
+            YOUR CONSULTANT
+
+        </span>
+
+
+        <h1>
+
+            Dr. {{ doctor.user.name }}
+
+        </h1>
+
+
+        <p class="slot-specialization">
+
+            {{ doctor.category.name }}
+
+        </p>
+
+
+        <div class="slot-doctor-meta">
+
+            <span>
+
+                <i class="fa-solid fa-graduation-cap"></i>
+
+                {{ doctor.qualification }}
+
+            </span>
+
+
+            <span>
+
+                <i class="fa-solid fa-briefcase"></i>
+
+                {{ doctor.experience }} years experience
+
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <div class="slot-fee">
+
+        <small>
+            Consultation
+        </small>
+
+        <strong>
+            ₹{{ doctor.consultation_fee }}
+        </strong>
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =========================================
+     PAGE HEADING
+========================================= -->
+
+<section class="page-heading slot-heading">
+
+    <span class="heading-label">
+
+        APPOINTMENT
+
+    </span>
+
+
+    <h1>
+
+        Select a Time
+
+    </h1>
+
+
+    <p>
+
+        Choose an available token for
+        your consultation.
+
+    </p>
+
+</section>
+
+
+
+<!-- =========================================
+     LEGEND
+========================================= -->
+
+<div class="slot-legend glass">
+
+
+    <div class="legend-item">
+
+        <span class="legend-dot available-dot"></span>
+
+        Available
+
+    </div>
+
+
+    <div class="legend-item">
+
+        <span class="legend-dot booked-dot"></span>
+
+        Booked
+
+    </div>
+
+
+</div>
+
+
+
+<!-- =========================================
+     SLOT LIST
+========================================= -->
+
+<section class="slots-area">
+
+
+{% regroup slots by date as date_groups %}
+
+
+{% for date_group in date_groups %}
+
+
+    <!-- DATE -->
+
+    <div class="date-block">
+
+
+        <div class="date-header">
+
+
+            <div class="date-icon">
+
+                <i class="fa-solid fa-calendar-day"></i>
+
+            </div>
+
+
+            <div>
+
+                <small>
+                    APPOINTMENT DATE
+                </small>
+
+                <h2>
+
+                    {{ date_group.grouper|date:"l, d F Y" }}
+
+                </h2>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- SESSIONS -->
+
+        {% regroup date_group.list by session as session_groups %}
+
+
+        {% for session_group in session_groups %}
+
+
+        <div class="session-card glass">
+
+
+            <!-- SESSION HEADER -->
+
+            <div class="session-header">
+
+
+                <div class="session-title">
+
+
+                    <div class="session-icon">
+
+                        {% if session_group.grouper == "morning" %}
+
+                            <i class="fa-solid fa-sun"></i>
+
+                        {% elif session_group.grouper == "afternoon" %}
+
+                            <i class="fa-solid fa-cloud-sun"></i>
+
+                        {% else %}
+
+                            <i class="fa-solid fa-moon"></i>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <div>
+
+                        <h3>
+
+                            {{ session_group.grouper|title }}
+
+                        </h3>
+
+
+                        <p>
+
+                            {% if session_group.grouper == "morning" %}
+
+                                09:00 AM — 12:20 PM
+
+                            {% elif session_group.grouper == "afternoon" %}
+
+                                01:00 PM — 04:20 PM
+
+                            {% else %}
+
+                                05:00 PM — 08:20 PM
+
+                            {% endif %}
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="session-count">
+
+                    {{ session_group.list|length }}
+
+                    <span>
+                        tokens
+                    </span>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- TOKENS -->
+
+            <div class="token-grid">
+
+
+                {% for slot in session_group.list %}
+
+
+                    {% if slot.is_booked %}
+
+
+                        <button
+                            class="token booked"
+                            disabled
+                        >
+
+                            <strong>
+
+                                {{ slot.slot_number|stringformat:"02d" }}
+
+                            </strong>
+
+
+                            <small>
+
+                                Booked
+
+                            </small>
+
+                        </button>
+
+
+                    {% else %}
+
+
+                        <a
+                            href="{% url 'book_slot' slot.id %}"
+                            class="token available"
+                        >
+
+                            <strong>
+
+                                {{ slot.slot_number|stringformat:"02d" }}
+
+                            </strong>
+
+
+                            <small>
+
+                                {{ slot.start_time|time:"h:i A" }}
+
+                            </small>
+
+                        </a>
+
+
+                    {% endif %}
+
+
+                {% endfor %}
+
+
+            </div>
+
+
+        </div>
+
+
+        {% endfor %}
+
+
+    </div>
+
+
+{% empty %}
+
+
+    <!-- EMPTY -->
+
+    <div class="slots-empty glass">
+
+
+        <div class="slots-empty-icon">
+
+            <i class="fa-solid fa-calendar-xmark"></i>
+
+        </div>
+
+
+        <h2>
+
+            No appointments available
+
+        </h2>
+
+
+        <p>
+
+            This doctor currently has no
+            available appointment slots.
+
+        </p>
+
+
+        <a
+            href="{% url 'doctor_categories' %}"
+            class="back-button"
+        >
+
+            <i class="fa-solid fa-arrow-left"></i>
+
+            Find Another Doctor
+
+        </a>
+
+
+    </div>
+
+
+{% endfor %}
+
+
+</section>
+
+
+{% endblock %}
