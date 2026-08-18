@@ -31,7 +31,7 @@ def home(request):
 
     return render(
         request,
-        "consultancy/home.html",
+        "consultancy/index.html",
         {
             "doctors": doctors,
             "doctor_count": doctor_count,
