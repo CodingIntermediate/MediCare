@@ -1,0 +1,270 @@
+{% extends "consultancy/base.html" %}
+
+
+{% block title %}
+    Prescription
+{% endblock %}
+
+
+{% block navigation %}
+
+<a href="{% url 'doctor_dashboard' %}">
+    <i class="fa-solid fa-house"></i>
+    <span>Dashboard</span>
+</a>
+
+<a href="{% url 'doctor_slots_list' %}">
+    <i class="fa-solid fa-calendar-days"></i>
+    <span>My Slots</span>
+</a>
+
+<a class="active" href="{% url 'doctor_bookings' %}">
+    <i class="fa-solid fa-users"></i>
+    <span>Patient Bookings</span>
+</a>
+
+<a href="{% url 'doctor_profile' %}">
+    <i class="fa-solid fa-user-doctor"></i>
+    <span>My Profile</span>
+</a>
+
+{% endblock %}
+
+
+{% block navigation_bottom %}
+
+<a href="{% url 'doctor_availability' %}">
+    <i class="fa-solid fa-clock"></i>
+    <span>Availability</span>
+</a>
+
+<a href="{% url 'doctor_logout' %}">
+    <i class="fa-solid fa-right-from-bracket"></i>
+    <span>Logout</span>
+</a>
+
+{% endblock %}
+
+
+{% block header %}
+
+<div class="doctor-user-area">
+
+    <div class="doctor-header-status">
+        <span></span>
+        Available
+    </div>
+
+    <div class="user-avatar doctor-header-avatar">
+        {{ request.user.name|first|upper }}
+    </div>
+
+</div>
+
+{% endblock %}
+
+
+{% block content %}
+
+
+<section class="page-heading doctor-page-heading">
+
+    <span class="heading-label">
+        MEDICAL RECORD
+    </span>
+
+    <h1>
+        Prescription
+    </h1>
+
+    <p>
+        Create a prescription for
+        {{ consultation.booking.patient.user.name }}.
+    </p>
+
+</section>
+
+
+<!-- =====================================
+     PATIENT SUMMARY
+===================================== -->
+
+<section class="prescription-patient-card glass">
+
+    <div class="prescription-patient-avatar">
+
+        {{ consultation.booking.patient.user.name|first|upper }}
+
+    </div>
+
+
+    <div>
+
+        <span>
+            PATIENT
+        </span>
+
+        <h2>
+            {{ consultation.booking.patient.user.name }}
+        </h2>
+
+        <p>
+            Booking ID:
+            {{ consultation.booking.booking_id }}
+        </p>
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =====================================
+     PRESCRIPTION FORM
+===================================== -->
+
+<form method="POST">
+
+    {% csrf_token %}
+
+
+    <section class="prescription-card glass">
+
+
+        <div class="prescription-card-heading">
+
+            <div class="prescription-card-icon">
+
+                <i class="fa-solid fa-prescription-bottle-medical"></i>
+
+            </div>
+
+
+            <div>
+
+                <span>
+                    TREATMENT PLAN
+                </span>
+
+                <h2>
+                    Prescription Details
+                </h2>
+
+                <p>
+                    Enter the medicines and instructions for the patient.
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- MEDICINES -->
+
+        <div class="prescription-field">
+
+            <label for="medicines">
+                Medicines
+            </label>
+
+
+            <textarea
+                id="medicines"
+                name="medicines"
+                rows="7"
+                placeholder="Enter prescribed medicines, dosage and duration..."
+            >{{ prescription.medicines }}</textarea>
+
+        </div>
+
+
+
+        <!-- INSTRUCTIONS -->
+
+        <div class="prescription-field">
+
+            <label for="instructions">
+                Instructions
+            </label>
+
+
+            <textarea
+                id="instructions"
+                name="instructions"
+                rows="5"
+                placeholder="Enter instructions for taking the medicines..."
+            >{{ prescription.instructions }}</textarea>
+
+        </div>
+
+
+
+        <!-- FOLLOW UP -->
+
+        <div class="prescription-field">
+
+            <label for="follow_up_date">
+                Follow-up Date
+            </label>
+
+
+            <input
+                type="date"
+                id="follow_up_date"
+                name="follow_up_date"
+                value="{{ prescription.follow_up_date|date:'Y-m-d' }}"
+            >
+
+        </div>
+
+
+
+        <!-- NOTES -->
+
+        <div class="prescription-field">
+
+            <label for="notes">
+                Additional Notes
+            </label>
+
+
+            <textarea
+                id="notes"
+                name="notes"
+                rows="4"
+                placeholder="Additional instructions or notes..."
+            >{{ prescription.notes }}</textarea>
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- =====================================
+         ACTION
+    ====================================== -->
+
+    <div class="prescription-actions">
+
+        <button
+            type="submit"
+            class="doctor-primary-button"
+        >
+
+            <i class="fa-solid fa-check"></i>
+
+            Save Prescription
+
+        </button>
+
+    </div>
+
+
+</form>
+
+
+{% endblock %}

@@ -1,0 +1,397 @@
+{% extends "consultancy/base.html" %}
+
+
+{% block title %}
+    Patient Profile
+{% endblock %}
+
+
+{% block navigation %}
+
+<a href="{% url 'doctor_dashboard' %}">
+    <i class="fa-solid fa-house"></i>
+    <span>Dashboard</span>
+</a>
+
+<a href="{% url 'doctor_slots_list' %}">
+    <i class="fa-solid fa-calendar-days"></i>
+    <span>My Slots</span>
+</a>
+
+<a class="active" href="{% url 'doctor_bookings' %}">
+    <i class="fa-solid fa-users"></i>
+    <span>Patient Bookings</span>
+</a>
+
+<a href="{% url 'doctor_profile' %}">
+    <i class="fa-solid fa-user-doctor"></i>
+    <span>My Profile</span>
+</a>
+
+{% endblock %}
+
+
+{% block navigation_bottom %}
+
+<a href="{% url 'doctor_availability' %}">
+    <i class="fa-solid fa-clock"></i>
+    <span>Availability</span>
+</a>
+
+<a href="{% url 'doctor_logout' %}">
+    <i class="fa-solid fa-right-from-bracket"></i>
+    <span>Logout</span>
+</a>
+
+{% endblock %}
+
+
+{% block header %}
+
+<div class="doctor-user-area">
+
+    <div class="doctor-header-status">
+        <span></span>
+        Available
+    </div>
+
+    <div class="user-avatar doctor-header-avatar">
+        {{ request.user.name|first|upper }}
+    </div>
+
+</div>
+
+{% endblock %}
+
+
+{% block content %}
+
+
+<section class="page-heading doctor-page-heading">
+
+    <span class="heading-label">
+        PATIENT INFORMATION
+    </span>
+
+    <h1>
+        Patient Profile
+    </h1>
+
+    <p>
+        Review the patient's health information before consultation.
+    </p>
+
+</section>
+
+
+<!-- =====================================
+     PATIENT HEADER
+===================================== -->
+
+<section class="doctor-patient-profile-card glass">
+
+
+    <div class="doctor-patient-profile-header">
+
+
+        <div class="doctor-patient-profile-avatar">
+
+            {{ patient.user.name|first|upper }}
+
+        </div>
+
+
+        <div>
+
+            <span>
+                PATIENT
+            </span>
+
+            <h2>
+                {{ patient.user.name }}
+            </h2>
+
+            <p>
+                {{ patient.user.email }}
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =====================================
+     PERSONAL INFORMATION
+===================================== -->
+
+<section class="doctor-patient-info-grid">
+
+
+    <div class="doctor-patient-info-card glass">
+
+        <div class="doctor-patient-info-icon">
+            <i class="fa-solid fa-user"></i>
+        </div>
+
+        <span>
+            GENDER
+        </span>
+
+        <strong>
+
+            {% if patient.profile.gender %}
+                {{ patient.profile.gender }}
+            {% else %}
+                Not provided
+            {% endif %}
+
+        </strong>
+
+    </div>
+
+
+    <div class="doctor-patient-info-card glass">
+
+        <div class="doctor-patient-info-icon">
+            <i class="fa-solid fa-cake-candles"></i>
+        </div>
+
+        <span>
+            DATE OF BIRTH
+        </span>
+
+        <strong>
+
+            {% if patient.profile.date_of_birth %}
+                {{ patient.profile.date_of_birth|date:"d M Y" }}
+            {% else %}
+                Not provided
+            {% endif %}
+
+        </strong>
+
+    </div>
+
+
+    <div class="doctor-patient-info-card glass">
+
+        <div class="doctor-patient-info-icon">
+            <i class="fa-solid fa-ruler-vertical"></i>
+        </div>
+
+        <span>
+            HEIGHT
+        </span>
+
+        <strong>
+
+            {% if patient.profile.height %}
+                {{ patient.profile.height }} cm
+            {% else %}
+                Not provided
+            {% endif %}
+
+        </strong>
+
+    </div>
+
+
+    <div class="doctor-patient-info-card glass">
+
+        <div class="doctor-patient-info-icon">
+            <i class="fa-solid fa-weight-scale"></i>
+        </div>
+
+        <span>
+            WEIGHT
+        </span>
+
+        <strong>
+
+            {% if patient.profile.weight %}
+                {{ patient.profile.weight }} kg
+            {% else %}
+                Not provided
+            {% endif %}
+
+        </strong>
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =====================================
+     MEDICAL INFORMATION
+===================================== -->
+
+<section class="doctor-patient-medical-card glass">
+
+
+    <div class="doctor-patient-section-heading">
+
+        <div class="doctor-patient-section-icon">
+
+            <i class="fa-solid fa-notes-medical"></i>
+
+        </div>
+
+
+        <div>
+
+            <span>
+                HEALTH INFORMATION
+            </span>
+
+            <h2>
+                Medical Information
+            </h2>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="doctor-patient-medical-grid">
+
+
+        <div>
+
+            <span>
+                BLOOD GROUP
+            </span>
+
+            <p>
+
+                {% if patient.profile.blood_group %}
+                    {{ patient.profile.blood_group }}
+                {% else %}
+                    Not provided
+                {% endif %}
+
+            </p>
+
+        </div>
+
+
+        <div>
+
+            <span>
+                ALLERGIES
+            </span>
+
+            <p>
+
+                {% if patient.profile.allergies %}
+                    {{ patient.profile.allergies }}
+                {% else %}
+                    No information provided
+                {% endif %}
+
+            </p>
+
+        </div>
+
+
+        <div>
+
+            <span>
+                EXISTING CONDITIONS
+            </span>
+
+            <p>
+
+                {% if patient.profile.existing_conditions %}
+                    {{ patient.profile.existing_conditions }}
+                {% else %}
+                    No information provided
+                {% endif %}
+
+            </p>
+
+        </div>
+
+
+        <div>
+
+            <span>
+                CURRENT MEDICATIONS
+            </span>
+
+            <p>
+
+                {% if patient.profile.current_medications %}
+                    {{ patient.profile.current_medications }}
+                {% else %}
+                    No information provided
+                {% endif %}
+
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =====================================
+     BMI
+===================================== -->
+
+<section class="doctor-patient-bmi-card glass">
+
+
+    <div>
+
+        <span>
+            BODY MASS INDEX
+        </span>
+
+        <h2>
+            BMI
+        </h2>
+
+    </div>
+
+
+    <strong>
+
+        {% if patient.profile.bmi %}
+            {{ patient.profile.bmi }}
+        {% else %}
+            —
+        {% endif %}
+
+    </strong>
+
+
+    <div class="doctor-patient-profile-actions">
+    
+        <a
+            href="{% url 'start_consultation' booking.id %}"
+            class="doctor-primary-button"
+        >
+    
+            <i class="fa-solid fa-stethoscope"></i>
+    
+            Start Consultation
+    
+        </a>
+    
+    </div>
+</section>
+
+
+{% endblock %}

@@ -1,0 +1,544 @@
+{% extends "consultancy/base.html" %}
+
+
+{% block title %}
+    My Profile
+{% endblock %}
+
+
+{% block navigation %}
+
+
+<a
+    href="{% url 'patient_dashboard' %}"
+>
+
+    <i class="fa-solid fa-house"></i>
+
+    <span>
+        Dashboard
+    </span>
+
+</a>
+
+
+<a
+    href="{% url 'doctor_categories' %}"
+>
+
+    <i class="fa-solid fa-user-doctor"></i>
+
+    <span>
+        Find a Doctor
+    </span>
+
+</a>
+
+
+<a
+    href="{% url 'my_bookings' %}"
+>
+
+    <i class="fa-solid fa-calendar-check"></i>
+
+    <span>
+        My Bookings
+    </span>
+
+</a>
+
+
+<a
+    href="{% url 'patient_profile' %}"
+    class="active"
+>
+
+    <i class="fa-solid fa-user"></i>
+
+    <span>
+        My Profile
+    </span>
+
+</a>
+
+
+{% endblock %}
+
+
+
+{% block navigation_bottom %}
+
+
+<a
+    href="{% url 'patient_logout' %}"
+>
+
+    <i class="fa-solid fa-right-from-bracket"></i>
+
+    <span>
+        Logout
+    </span>
+
+</a>
+
+
+{% endblock %}
+
+
+
+{% block header %}
+
+
+<div class="user-area">
+
+    <div class="user-avatar">
+
+        {{ patient.user.name|first|upper }}
+
+    </div>
+
+
+    <span class="user-name">
+
+        {{ patient.user.name }}
+
+    </span>
+
+</div>
+
+
+{% endblock %}
+
+
+
+{% block content %}
+
+
+<div class="patient-profile">
+
+
+    <!-- =========================================
+         PROFILE HEADER
+    ========================================== -->
+
+    <div class="patient-profile-header">
+
+        <span>
+            PERSONAL HEALTH PROFILE
+        </span>
+
+
+        <h1>
+            My Profile
+        </h1>
+
+
+        <p>
+
+            Keep your personal and health information
+            up to date so your doctor can better
+            understand your healthcare needs.
+
+        </p>
+
+    </div>
+
+
+
+    <!-- =========================================
+         USER CARD
+    ========================================== -->
+
+    <div class="glass patient-profile-user">
+
+
+        <div class="patient-profile-avatar">
+
+            <i class="fa-solid fa-user"></i>
+
+        </div>
+
+
+        <div class="patient-profile-user-info">
+
+            <h2>
+                {{ patient.user.name }}
+            </h2>
+
+
+            <p>
+                {{ patient.user.email }}
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- =========================================
+         PROFILE FORM
+    ========================================== -->
+
+    <form method="POST">
+
+        {% csrf_token %}
+
+
+        <div class="patient-profile-grid">
+
+
+            <!-- =====================================
+                 PERSONAL INFORMATION
+            ====================================== -->
+
+            <div class="glass patient-profile-card">
+
+
+                <div class="patient-profile-card-heading">
+
+
+                    <div class="patient-profile-card-icon">
+
+                        <i class="fa-solid fa-user"></i>
+
+                    </div>
+
+
+                    <div>
+
+                        <h2>
+                            Personal Information
+                        </h2>
+
+                        <p>
+                            Basic personal details
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <div class="patient-profile-form-grid">
+
+
+                    <div class="patient-profile-form-group">
+
+                        <label>
+                            Date of Birth
+                        </label>
+
+
+                        {{ form.date_of_birth }}
+
+
+                        {% for error in form.date_of_birth.errors %}
+
+                            <span class="patient-profile-error">
+                                {{ error }}
+                            </span>
+
+                        {% endfor %}
+
+                    </div>
+
+
+
+                    <div class="patient-profile-form-group">
+
+                        <label>
+                            Gender
+                        </label>
+
+
+                        {{ form.gender }}
+
+
+                        {% for error in form.gender.errors %}
+
+                            <span class="patient-profile-error">
+                                {{ error }}
+                            </span>
+
+                        {% endfor %}
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- =====================================
+                 PHYSICAL INFORMATION
+            ====================================== -->
+
+            <div class="glass patient-profile-card">
+
+
+                <div class="patient-profile-card-heading">
+
+
+                    <div class="patient-profile-card-icon">
+
+                        <i class="fa-solid fa-weight-scale"></i>
+
+                    </div>
+
+
+                    <div>
+
+                        <h2>
+                            Physical Information
+                        </h2>
+
+                        <p>
+                            Height, weight and BMI
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <div class="patient-profile-form-grid">
+
+
+                    <div class="patient-profile-form-group">
+
+                        <label>
+                            Height (cm)
+                        </label>
+
+
+                        {{ form.height }}
+
+
+                        {% for error in form.height.errors %}
+
+                            <span class="patient-profile-error">
+                                {{ error }}
+                            </span>
+
+                        {% endfor %}
+
+                    </div>
+
+
+
+                    <div class="patient-profile-form-group">
+
+                        <label>
+                            Weight (kg)
+                        </label>
+
+
+                        {{ form.weight }}
+
+
+                        {% for error in form.weight.errors %}
+
+                            <span class="patient-profile-error">
+                                {{ error }}
+                            </span>
+
+                        {% endfor %}
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- BMI -->
+
+                <div class="patient-bmi">
+
+
+                    <div class="patient-bmi-info">
+
+
+                        <div class="patient-bmi-icon">
+
+                            <i class="fa-solid fa-chart-simple"></i>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>
+                                Current BMI
+                            </span>
+
+                            <strong>
+                                Based on your latest measurements
+                            </strong>
+
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="patient-bmi-value">
+
+
+                        {% if profile.bmi %}
+
+                            {{ profile.bmi }}
+
+                        {% else %}
+
+                            —
+
+                        {% endif %}
+
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- =====================================
+                 MEDICAL INFORMATION
+            ====================================== -->
+
+            <div class="glass patient-profile-card full-width">
+
+
+                <div class="patient-profile-card-heading">
+
+
+                    <div class="patient-profile-card-icon">
+
+                        <i class="fa-solid fa-notes-medical"></i>
+
+                    </div>
+
+
+                    <div>
+
+                        <h2>
+                            Medical Information
+                        </h2>
+
+                        <p>
+                            Information that helps your doctor
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <div class="patient-profile-form-grid">
+
+
+                    <div class="patient-profile-form-group">
+
+                        <label>
+                            Blood Group
+                        </label>
+
+
+                        {{ form.blood_group }}
+
+                    </div>
+
+
+
+                    <div class="patient-profile-form-group">
+
+                        <label>
+                            Current Medications
+                        </label>
+
+
+                        {{ form.current_medications }}
+
+                    </div>
+
+
+
+                    <div class="patient-profile-form-group">
+
+                        <label>
+                            Allergies
+                        </label>
+
+
+                        {{ form.allergies }}
+
+                    </div>
+
+
+
+                    <div class="patient-profile-form-group">
+
+                        <label>
+                            Existing Conditions
+                        </label>
+
+
+                        {{ form.existing_conditions }}
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =====================================
+             SAVE BUTTON
+        ====================================== -->
+
+        <div class="patient-profile-actions">
+
+
+            <button
+                type="submit"
+                class="patient-profile-save"
+            >
+
+                <i class="fa-solid fa-check"></i>
+
+                Save Profile
+
+            </button>
+
+
+        </div>
+
+
+    </form>
+
+
+</div>
+
+
+{% endblock %}

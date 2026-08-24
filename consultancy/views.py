@@ -400,7 +400,7 @@ def doctor_availability(request):
                         ).time()
 
                         end_time = datetime.strptime(
-                            "20:20",
+                            "21:20",
                             "%H:%M"
                         ).time()
 
@@ -538,7 +538,13 @@ def book_slot(request, slot_id):
     patient = Patient.objects.get(
         user=user
     )
+        # --------------------------------
+    # Check patient profile
+    # --------------------------------
 
+    if not patient.profile.is_complete():
+
+        return redirect("patient_profile")
     slot = Slot.objects.get(
         id=slot_id
     )
@@ -768,7 +774,6 @@ def patient_logout(request):
     return redirect("patient_login")
 
 # for the doctor side
-
 def doctor_bookings(request):
 
     user_id = request.session.get("user_id")
@@ -935,4 +940,235 @@ def doctor_profile(request):
             "form": form
         }
     )
+
+def patient_profile(request):
+
+    user_id = request.session.get("user_id")
+
+    if not user_id:
+        return redirect("patient_login")
+
+    user = User.objects.get(
+        id=user_id,
+        role="patient"
+    )
+
+    patient = Patient.objects.get(
+        user=user
+    )
+
+    profile = patient.profile
+
+    if request.method == "POST":
+
+        form = PatientProfileForm(
+            request.POST,
+            instance=profile
+        )
+
+        if form.is_valid():
+
+            form.save()
+
+            return redirect(
+                "patient_profile"
+            )
+
+    else:
+
+        form = PatientProfileForm(
+            instance=profile
+        )
+
+    return render(
+        request,
+        "consultancy/patient_profile.html",
+        {
+            "patient": patient,
+            "profile": profile,
+            "form": form,
+        }
+    )
     
+    
+def doctor_patient_profile(request, patient_id, booking_id):
+
+    user_id = request.session.get("user_id")
+
+    if not user_id:
+        return redirect("doctor_login")
+
+    user = User.objects.get(
+        id=user_id,
+        role="doctor"
+    )
+
+    doctor = Doctor.objects.get(
+        user=user
+    )
+
+    booking = Booking.objects.get(
+        id=booking_id,
+        doctor=doctor,
+        patient_id=patient_id,
+        status="confirmed"
+    )
+
+    patient = booking.patient
+
+    return render(
+        request,
+        "consultancy/doctor_patient_profile.html",
+        {
+            "doctor": doctor,
+            "patient": patient,
+            "booking": booking
+        }
+    )
+    
+def start_consultation(request, booking_id):
+
+    user_id = request.session.get("user_id")
+
+    if not user_id:
+        return redirect("doctor_login")
+
+    user = User.objects.get(
+        id=user_id,
+        role="doctor"
+    )
+
+    doctor = Doctor.objects.get(
+        user=user
+    )
+
+    booking = Booking.objects.get(
+        id=booking_id,
+        doctor=doctor,
+        status="confirmed"
+    )
+
+    consultation, created = Consultation.objects.get_or_create(
+        booking=booking
+    )
+
+    if request.method == "POST":
+
+        consultation.symptoms = request.POST.get(
+            "symptoms",
+            ""
+        )
+
+        consultation.doctor_notes = request.POST.get(
+            "doctor_notes",
+            ""
+        )
+
+        consultation.diagnosis = request.POST.get(
+            "diagnosis",
+            ""
+        )
+
+        consultation.status = request.POST.get(
+            "status",
+            "pending"
+        )
+
+        consultation.save()
+
+        return redirect(
+            "start_consultation",
+            booking_id=booking.id
+        )
+
+    return render(
+        request,
+        "consultancy/consultation.html",
+        {
+            "doctor": doctor,
+            "booking": booking,
+            "consultation": consultation
+        }
+    )
+    
+    
+    
+def create_prescription(request, consultation_id):
+
+    user_id = request.session.get("user_id")
+
+    if not user_id:
+        return redirect("doctor_login")
+
+    user = User.objects.get(
+        id=user_id,
+        role="doctor"
+    )
+
+    doctor = Doctor.objects.get(
+        user=user
+    )
+
+    consultation = Consultation.objects.get(
+        id=consultation_id,
+        booking__doctor=doctor
+    )
+
+    if consultation.status != "completed":
+
+        return HttpResponse("""
+            <script>
+                alert("Complete the consultation before creating a prescription.");
+                history.back();
+            </script>
+        """)
+
+    prescription, created = Prescription.objects.get_or_create(
+        consultation=consultation
+    )
+
+    if request.method == "POST":
+
+        prescription.medicines = request.POST.get(
+            "medicines",
+            ""
+        )
+
+        prescription.instructions = request.POST.get(
+            "instructions",
+            ""
+        )
+
+        follow_up_date = request.POST.get(
+            "follow_up_date"
+        )
+
+        if follow_up_date:
+
+            prescription.follow_up_date = follow_up_date
+
+        else:
+
+            prescription.follow_up_date = None
+
+        prescription.notes = request.POST.get(
+            "notes",
+            ""
+        )
+
+        prescription.save()
+
+        return redirect(
+            "create_prescription",
+            consultation_id=consultation.id
+        )
+
+    return render(
+        request,
+        "consultancy/prescription.html",
+        {
+            "doctor": doctor,
+            "consultation": consultation,
+            "prescription": prescription
+        }
+    )

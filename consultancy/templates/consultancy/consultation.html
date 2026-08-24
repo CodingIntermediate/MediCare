@@ -1,0 +1,385 @@
+{% extends "consultancy/base.html" %}
+
+
+{% block title %}
+    Consultation
+{% endblock %}
+
+
+{% block navigation %}
+
+<a href="{% url 'doctor_dashboard' %}">
+    <i class="fa-solid fa-house"></i>
+    <span>Dashboard</span>
+</a>
+
+
+<a href="{% url 'doctor_slots_list' %}">
+    <i class="fa-solid fa-calendar-days"></i>
+    <span>My Slots</span>
+</a>
+
+
+<a
+    href="{% url 'doctor_bookings' %}"
+    class="active"
+>
+    <i class="fa-solid fa-users"></i>
+    <span>Patient Bookings</span>
+</a>
+
+
+<a href="{% url 'doctor_profile' %}">
+    <i class="fa-solid fa-user-doctor"></i>
+    <span>My Profile</span>
+</a>
+
+{% endblock %}
+
+
+{% block navigation_bottom %}
+
+<a href="{% url 'doctor_availability' %}">
+    <i class="fa-solid fa-clock"></i>
+    <span>Availability</span>
+</a>
+
+
+<a href="{% url 'doctor_logout' %}">
+    <i class="fa-solid fa-right-from-bracket"></i>
+    <span>Logout</span>
+</a>
+
+{% endblock %}
+
+
+{% block header %}
+
+<div class="doctor-user-area">
+
+    <div class="doctor-header-status">
+        <span></span>
+        Available
+    </div>
+
+
+    <div class="user-avatar doctor-header-avatar">
+        {{ request.user.name|first|upper }}
+    </div>
+
+</div>
+
+{% endblock %}
+
+
+{% block content %}
+
+
+<!-- =====================================
+     PAGE HEADING
+===================================== -->
+
+<section class="page-heading doctor-page-heading">
+
+    <span class="heading-label">
+        MEDICAL CONSULTATION
+    </span>
+
+
+    <h1>
+        Consultation
+    </h1>
+
+
+    <p>
+        Review the patient and record consultation details.
+    </p>
+
+</section>
+
+
+
+<!-- =====================================
+     PATIENT SUMMARY
+===================================== -->
+
+<section class="consultation-patient-card glass">
+
+
+    <div class="consultation-patient-avatar">
+
+        {{ booking.patient.user.name|first|upper }}
+
+    </div>
+
+
+    <div>
+
+        <span>
+            PATIENT
+        </span>
+
+
+        <h2>
+            {{ booking.patient.user.name }}
+        </h2>
+
+
+        <p>
+            {{ booking.patient.user.email }}
+        </p>
+
+    </div>
+
+
+    <div class="consultation-booking-info">
+
+        <div>
+
+            <span>
+                BOOKING ID
+            </span>
+
+            <strong>
+                {{ booking.booking_id }}
+            </strong>
+
+        </div>
+
+
+        <div>
+
+            <span>
+                TOKEN
+            </span>
+
+            <strong>
+                #{{ booking.token_id }}
+            </strong>
+
+        </div>
+
+
+        <div>
+
+            <span>
+                DATE
+            </span>
+
+            <strong>
+                {{ booking.slot.date|date:"d M Y" }}
+            </strong>
+
+        </div>
+
+
+        <div>
+
+            <span>
+                TIME
+            </span>
+
+            <strong>
+                {{ booking.slot.start_time|time:"h:i A" }}
+            </strong>
+
+        </div>
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =====================================
+     CONSULTATION FORM
+===================================== -->
+
+<form method="POST">
+
+    {% csrf_token %}
+
+
+    <section class="consultation-card glass">
+
+
+        <div class="consultation-card-heading">
+
+            <div class="consultation-card-icon">
+
+                <i class="fa-solid fa-stethoscope"></i>
+
+            </div>
+
+
+            <div>
+
+                <span>
+                    CONSULTATION NOTES
+                </span>
+
+                <h2>
+                    Patient Assessment
+                </h2>
+
+                <p>
+                    Record the information from this consultation.
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- SYMPTOMS -->
+
+        <div class="consultation-field">
+
+            <label for="symptoms">
+                Symptoms
+            </label>
+
+
+            <textarea
+                id="symptoms"
+                name="symptoms"
+                rows="5"
+                placeholder="Enter the patient's reported symptoms..."
+            >{{ consultation.symptoms }}</textarea>
+
+
+        </div>
+
+
+
+        <!-- DOCTOR NOTES -->
+
+        <div class="consultation-field">
+
+            <label for="doctor_notes">
+                Doctor Notes
+            </label>
+
+
+            <textarea
+                id="doctor_notes"
+                name="doctor_notes"
+                rows="5"
+                placeholder="Enter your clinical observations..."
+            >{{ consultation.doctor_notes }}</textarea>
+
+
+        </div>
+
+
+
+        <!-- DIAGNOSIS -->
+
+        <div class="consultation-field">
+
+            <label for="diagnosis">
+                Diagnosis
+            </label>
+
+
+            <textarea
+                id="diagnosis"
+                name="diagnosis"
+                rows="5"
+                placeholder="Enter the diagnosis..."
+            >{{ consultation.diagnosis }}</textarea>
+
+
+        </div>
+
+
+
+        <!-- STATUS -->
+
+        <div class="consultation-field">
+
+            <label for="status">
+                Consultation Status
+            </label>
+
+
+            <select
+                id="status"
+                name="status"
+            >
+
+                <option
+                    value="pending"
+                    {% if consultation.status == "pending" %}selected{% endif %}
+                >
+                    Pending
+                </option>
+
+
+                <option
+                    value="in_progress"
+                    {% if consultation.status == "in_progress" %}selected{% endif %}
+                >
+                    In Progress
+                </option>
+
+
+                <option
+                    value="completed"
+                    {% if consultation.status == "completed" %}selected{% endif %}
+                >
+                    Completed
+                </option>
+
+            </select>
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- =====================================
+         SAVE
+    ===================================== -->
+
+<div class="consultation-actions">
+
+    <button
+        type="submit"
+        class="doctor-primary-button"
+    >
+
+        <i class="fa-solid fa-check"></i>
+
+        Save Consultation
+
+    </button>
+
+
+    {% if consultation.status == "completed" %}
+
+        <a
+            href="{% url 'create_prescription' consultation.id %}"
+            class="doctor-primary-button"
+        >
+
+            <i class="fa-solid fa-prescription-bottle-medical"></i>
+
+            Create Prescription
+
+        </a>
+
+    {% endif %}
+
+</div>
+     
+
+
+</form>
+
+
+{% endblock %}

@@ -167,7 +167,7 @@
 
             <strong>
 
-                {{ bookings|length }}
+                {{ today_bookings|length }}
 
             </strong>
 
@@ -196,19 +196,19 @@
         <div>
 
             <span>
-                CONSULTATIONS
+                TODAY
             </span>
 
 
             <strong>
 
-                {{ bookings|length }}
+                {{ today_bookings|length }}
 
             </strong>
 
 
             <p>
-                Patient appointments
+                Today's appointments
             </p>
 
         </div>
@@ -222,21 +222,42 @@
 
 
 <!-- =====================================
-     BOOKING LIST
+     TODAY'S BOOKINGS
 ===================================== -->
 
 <section class="doctor-booking-list">
 
 
-    {% for booking in bookings %}
+    <div class="doctor-section-heading">
+
+        <div>
+
+            <span>
+                TODAY
+            </span>
+
+            <h2>
+                Today's Appointments
+            </h2>
+
+        </div>
+
+
+        <span>
+            {{ today_bookings|length }} appointment{{ today_bookings|length|pluralize }}
+        </span>
+
+    </div>
+
+
+
+    {% for booking in today_bookings %}
 
 
     <article class="doctor-booking-card glass">
 
 
-        <!-- =================================
-             PATIENT
-        ================================== -->
+        <!-- PATIENT -->
 
         <div class="doctor-patient">
 
@@ -277,15 +298,12 @@
 
 
 
-        <!-- =================================
-             STATUS
-        ================================== -->
+        <!-- STATUS -->
 
         <div class="doctor-booking-status">
 
 
             {% if booking.status == "confirmed" %}
-
 
                 <span class="doctor-status confirmed-status">
 
@@ -295,9 +313,7 @@
 
                 </span>
 
-
             {% elif booking.status == "cancelled" %}
-
 
                 <span class="doctor-status cancelled-status">
 
@@ -307,16 +323,13 @@
 
                 </span>
 
-
             {% else %}
-
 
                 <span class="doctor-status">
 
                     {{ booking.status|title }}
 
                 </span>
-
 
             {% endif %}
 
@@ -325,15 +338,12 @@
 
 
 
-        <!-- =================================
-             BOOKING DETAILS
-        ================================== -->
+        <!-- DETAILS -->
 
         <div class="doctor-booking-details">
 
 
             <div class="doctor-booking-detail">
-
 
                 <div class="doctor-booking-detail-icon">
 
@@ -348,7 +358,6 @@
                         Token
                     </span>
 
-
                     <strong class="doctor-token-highlight">
 
                         #{{ booking.token_id }}
@@ -357,13 +366,11 @@
 
                 </div>
 
-
             </div>
 
 
 
             <div class="doctor-booking-detail">
-
 
                 <div class="doctor-booking-detail-icon">
 
@@ -378,7 +385,6 @@
                         Date
                     </span>
 
-
                     <strong>
 
                         {{ booking.slot.date|date:"d M Y" }}
@@ -387,13 +393,11 @@
 
                 </div>
 
-
             </div>
 
 
 
             <div class="doctor-booking-detail">
-
 
                 <div class="doctor-booking-detail-icon">
 
@@ -408,7 +412,6 @@
                         Time
                     </span>
 
-
                     <strong>
 
                         {{ booking.slot.start_time|time:"h:i A" }}
@@ -417,13 +420,11 @@
 
                 </div>
 
-
             </div>
 
 
 
             <div class="doctor-booking-detail">
-
 
                 <div class="doctor-booking-detail-icon">
 
@@ -438,6 +439,293 @@
                         Consultation Fee
                     </span>
 
+                    <strong>
+
+                        ₹{{ booking.consultation_fee }}
+
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- FOOTER -->
+
+        <div class="doctor-booking-footer">
+
+
+            <div class="doctor-booking-id">
+
+                Booking ID:
+
+                <strong>
+
+                    {{ booking.booking_id }}
+
+                </strong>
+
+            </div>
+
+
+            <div class="doctor-booking-time">
+
+                <i class="fa-solid fa-calendar-check"></i>
+
+                Appointment scheduled
+
+            </div>
+            <a
+                href="{% url 'doctor_patient_profile' booking.patient.id booking.id %}"
+                class="doctor-primary-button"
+            >
+
+                <i class="fa-solid fa-user"></i>
+
+                View Patient
+
+            </a>
+
+
+        </div>
+
+
+    </article>
+
+
+    {% empty %}
+
+
+    <div class="doctor-bookings-empty glass">
+
+        <div class="doctor-bookings-empty-icon">
+
+            <i class="fa-solid fa-user-clock"></i>
+
+        </div>
+
+
+        <h2>
+
+            No appointments today
+
+        </h2>
+
+
+        <p>
+
+            You don't have any patient appointments
+            scheduled for today.
+
+        </p>
+
+    </div>
+
+
+    {% endfor %}
+
+
+</section>
+
+
+
+<!-- =====================================
+     UPCOMING BOOKINGS
+===================================== -->
+
+<section class="doctor-booking-list">
+
+
+    <div class="doctor-section-heading">
+
+        <div>
+
+            <span>
+                UPCOMING
+            </span>
+
+            <h2>
+                Upcoming Appointments
+            </h2>
+
+        </div>
+
+
+        <span>
+            {{ upcoming_bookings|length }} appointment{{ upcoming_bookings|length|pluralize }}
+        </span>
+
+    </div>
+
+
+
+    {% for booking in upcoming_bookings %}
+
+
+    <article class="doctor-booking-card glass">
+
+
+        <!-- PATIENT -->
+
+        <div class="doctor-patient">
+
+
+            <div class="doctor-patient-avatar">
+
+                {{ booking.patient.user.name|first|upper }}
+
+            </div>
+
+
+            <div>
+
+                <span class="patient-label">
+
+                    PATIENT
+
+                </span>
+
+
+                <h2>
+
+                    {{ booking.patient.user.name }}
+
+                </h2>
+
+
+                <p>
+
+                    {{ booking.patient.user.email }}
+
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- STATUS -->
+
+        <div class="doctor-booking-status">
+
+            <span class="doctor-status confirmed-status">
+
+                <i class="fa-solid fa-circle-check"></i>
+
+                Confirmed
+
+            </span>
+
+        </div>
+
+
+
+        <!-- DETAILS -->
+
+        <div class="doctor-booking-details">
+
+
+            <div class="doctor-booking-detail">
+
+                <div class="doctor-booking-detail-icon">
+
+                    <i class="fa-solid fa-ticket"></i>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        Token
+                    </span>
+
+                    <strong class="doctor-token-highlight">
+
+                        #{{ booking.token_id }}
+
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="doctor-booking-detail">
+
+                <div class="doctor-booking-detail-icon">
+
+                    <i class="fa-solid fa-calendar-day"></i>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        Date
+                    </span>
+
+                    <strong>
+
+                        {{ booking.slot.date|date:"d M Y" }}
+
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="doctor-booking-detail">
+
+                <div class="doctor-booking-detail-icon">
+
+                    <i class="fa-solid fa-clock"></i>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        Time
+                    </span>
+
+                    <strong>
+
+                        {{ booking.slot.start_time|time:"h:i A" }}
+
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="doctor-booking-detail">
+
+                <div class="doctor-booking-detail-icon">
+
+                    <i class="fa-solid fa-indian-rupee-sign"></i>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        Consultation Fee
+                    </span>
 
                     <strong>
 
@@ -447,7 +735,6 @@
 
                 </div>
 
-
             </div>
 
 
@@ -455,9 +742,7 @@
 
 
 
-        <!-- =================================
-             FOOTER
-        ================================== -->
+        <!-- FOOTER -->
 
         <div class="doctor-booking-footer">
 
@@ -493,46 +778,28 @@
     {% empty %}
 
 
-    <!-- =================================
-         EMPTY
-    ================================== -->
-
     <div class="doctor-bookings-empty glass">
-
 
         <div class="doctor-bookings-empty-icon">
 
-            <i class="fa-solid fa-user-clock"></i>
+            <i class="fa-solid fa-calendar-xmark"></i>
 
         </div>
 
 
         <h2>
 
-            No patient bookings yet
+            No upcoming appointments
 
         </h2>
 
 
         <p>
 
-            Patient appointments will appear
-            here when someone books a consultation.
+            Future patient appointments will
+            appear here.
 
         </p>
-
-
-        <a
-            href="{% url 'doctor_availability' %}"
-            class="doctor-primary-button"
-        >
-
-            <i class="fa-solid fa-calendar-plus"></i>
-
-            Manage Availability
-
-        </a>
-
 
     </div>
 

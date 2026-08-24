@@ -109,5 +109,26 @@ path(
     "",
     home,
     name="home"
-)
+),
+path(
+    "profile/",
+    patient_profile,
+    name="patient_profile"
+),
+path(
+    "doctor/patient/<int:patient_id>/<int:booking_id>/",
+    doctor_patient_profile,
+    name="doctor_patient_profile"
+),
+path(
+    "doctor/consultation/<int:booking_id>/",
+    start_consultation,
+    name="start_consultation"
+),
+path(
+    "doctor/prescription/<int:consultation_id>/",
+    create_prescription,
+    name="create_prescription"
+),
+
 ]

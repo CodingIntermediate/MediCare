@@ -117,3 +117,63 @@ class DoctorProfileForm(forms.Form):
     is_available = forms.BooleanField(
         required=False
     )
+
+
+class PatientProfileForm(forms.ModelForm):
+
+    class Meta:
+
+        model = PatientProfile
+
+        fields = [
+            "date_of_birth",
+            "gender",
+            "height",
+            "weight",
+            "blood_group",
+            "allergies",
+            "existing_conditions",
+            "current_medications",
+        ]
+
+        widgets = {
+
+            "date_of_birth": forms.DateInput(
+                attrs={
+                    "type": "date"
+                }
+            ),
+
+            "height": forms.NumberInput(
+                attrs={
+                    "placeholder": "Height in cm"
+                }
+            ),
+
+            "weight": forms.NumberInput(
+                attrs={
+                    "placeholder": "Weight in kg"
+                }
+            ),
+
+            "allergies": forms.Textarea(
+                attrs={
+                    "placeholder": "Example: Penicillin allergy",
+                    "rows": 3
+                }
+            ),
+
+            "existing_conditions": forms.Textarea(
+                attrs={
+                    "placeholder": "Example: Diabetes, asthma, etc.",
+                    "rows": 3
+                }
+            ),
+
+            "current_medications": forms.Textarea(
+                attrs={
+                    "placeholder": "Medicines currently taking",
+                    "rows": 3
+                }
+            ),
+        }
