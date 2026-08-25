@@ -275,3 +275,4 @@ class Prescription(models.Model):
     def __str__(self):
 
         return f"Prescription - {self.consultation.booking.booking_id}"
+    

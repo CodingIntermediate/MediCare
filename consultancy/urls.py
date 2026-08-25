@@ -80,6 +80,11 @@ path(
     name="cancel_booking"
 ),
 path(
+    "booking-history/delete/",
+    delete_booking_history,
+    name="delete_booking_history"
+),
+path(
     "logout/",
     patient_logout,
     name="patient_logout"
@@ -140,4 +145,10 @@ path(
     analyze_consultation,
     name="analyze_consultation"
 ),
+path(
+    "doctor/prescription/<int:consultation_id>/",
+    doctor_prescription,
+    name="doctor_prescription"
+),
+
 ]

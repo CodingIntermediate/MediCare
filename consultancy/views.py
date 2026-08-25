@@ -730,6 +730,8 @@ def my_bookings(request):
             "past_bookings": past_bookings
         }
     )    
+    
+    
 def cancel_booking(request, booking_id):
 
     user_id = request.session.get("user_id")
@@ -1340,3 +1342,117 @@ def analyze_consultation(request, consultation_id):
         "start_consultation",
         booking_id=consultation.booking.id
     )
+    
+    
+def doctor_prescription(request, consultation_id):
+
+    user_id = request.session.get("user_id")
+
+    if not user_id:
+        return redirect("doctor_login")
+
+    user = User.objects.get(
+        id=user_id,
+        role="doctor"
+    )
+
+    doctor = Doctor.objects.get(
+        user=user
+    )
+
+    consultation = Consultation.objects.get(
+        id=consultation_id,
+        booking__doctor=doctor
+    )
+
+    prescription, created = Prescription.objects.get_or_create(
+        consultation=consultation
+    )
+
+    if request.method == "POST":
+
+        prescription.medicines = request.POST.get(
+            "medicines"
+        )
+
+        prescription.instructions = request.POST.get(
+            "instructions"
+        )
+
+        prescription.follow_up_date = request.POST.get(
+            "follow_up_date"
+        ) or None
+
+        prescription.save()
+
+        consultation.status = "completed"
+
+        consultation.save()
+
+        return redirect(
+            "start_consultation",
+            booking_id=consultation.booking.id
+        )
+
+    return render(
+        request,
+        "consultancy/doctor_prescription.html",
+        {
+            "doctor": doctor,
+            "consultation": consultation,
+            "prescription": prescription
+        }
+    )
+    
+def delete_booking_history(request):
+
+    user_id = request.session.get("user_id")
+
+    if not user_id:
+        return JsonResponse({
+            "success": False,
+            "message": "Please login again."
+        }, status=401)
+
+    if request.method != "POST":
+        return JsonResponse({
+            "success": False,
+            "message": "Invalid request."
+        }, status=400)
+
+    user = User.objects.get(
+        id=user_id,
+        role="patient"
+    )
+
+    patient = Patient.objects.get(
+        user=user
+    )
+
+    booking_ids = request.POST.getlist(
+        "booking_ids"
+    )
+
+    if not booking_ids:
+
+        return JsonResponse({
+            "success": False,
+            "message": "No booking selected."
+        }, status=400)
+
+    bookings = Booking.objects.filter(
+        id__in=booking_ids,
+        patient=patient
+    ).exclude(
+        status="confirmed"
+    )
+
+    deleted_count = bookings.count()
+
+    bookings.delete()
+
+    return JsonResponse({
+        "success": True,
+        "deleted_count": deleted_count
+    })    
+    

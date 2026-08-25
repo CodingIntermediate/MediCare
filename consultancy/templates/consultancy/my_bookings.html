@@ -143,7 +143,7 @@
 
 <section class="booking-section">
 
-
+   
     <div class="booking-section-heading">
 
         <div>
@@ -428,9 +428,13 @@
      HISTORY
 ===================================== -->
 
+<!-- =====================================
+     HISTORY
+===================================== -->
+
 <section class="booking-section history-section">
 
-
+    {% csrf_token %}
     <div class="booking-section-heading">
 
         <div>
@@ -456,98 +460,193 @@
 
 
 
-    {% for booking in past_bookings %}
+    {% if past_bookings %}
 
 
-    <article class="history-card glass">
+    <!-- =================================
+         HISTORY ACTION BAR
+    ================================== -->
+
+    <div class="history-actions glass">
 
 
-        <div class="history-doctor">
+        <label class="history-select-all">
+
+            <input
+                type="checkbox"
+                id="selectAllHistory"
+            >
+
+            <span>
+                Select All
+            </span>
+
+        </label>
 
 
-            <div class="history-avatar">
+        <button
+            type="button"
+            id="deleteSelectedHistory"
+            class="history-delete-selected"
+            disabled
+        >
 
-                <i class="fa-solid fa-user-doctor"></i>
+            <i class="fa-solid fa-trash"></i>
+
+            Delete Selected
+
+        </button>
+
+
+    </div>
+
+
+
+    <!-- =================================
+         HISTORY LIST
+    ================================== -->
+
+    <div id="historyList">
+
+
+        {% for booking in past_bookings %}
+
+
+        <article
+            class="history-card glass"
+            data-booking-id="{{ booking.id }}"
+        >
+
+
+            <!-- SELECT -->
+
+            <div class="history-select">
+
+                <input
+                    type="checkbox"
+                    class="history-checkbox"
+                    value="{{ booking.id }}"
+                >
 
             </div>
 
 
-            <div>
 
-                <h3>
+            <!-- DOCTOR -->
 
-                    Dr. {{ booking.doctor.user.name }}
+            <div class="history-doctor">
 
-                </h3>
+
+                <div class="history-avatar">
+
+                    <i class="fa-solid fa-user-doctor"></i>
+
+                </div>
+
+
+                <div>
+
+                    <h3>
+
+                        Dr. {{ booking.doctor.user.name }}
+
+                    </h3>
+
+
+                    <span>
+
+                        {{ booking.doctor.category.name }}
+
+                    </span>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- DATE -->
+
+            <div class="history-date">
 
 
                 <span>
 
-                    {{ booking.doctor.category.name }}
+                    <i class="fa-solid fa-calendar"></i>
+
+                    {{ booking.slot.date|date:"d M Y" }}
 
                 </span>
 
-            </div>
 
+                <span>
 
-        </div>
+                    <i class="fa-solid fa-clock"></i>
 
+                    {{ booking.slot.start_time|time:"h:i A" }}
 
+                </span>
 
-        <div class="history-date">
-
-            <span>
-
-                <i class="fa-solid fa-calendar"></i>
-
-                {{ booking.slot.date|date:"d M Y" }}
-
-            </span>
-
-
-            <span>
-
-                <i class="fa-solid fa-clock"></i>
-
-                {{ booking.slot.start_time|time:"h:i A" }}
-
-            </span>
-
-        </div>
-
-
-
-        {% if booking.status == "cancelled" %}
-
-
-            <div class="booking-status cancelled">
-
-                <span></span>
-
-                Cancelled
 
             </div>
 
 
-        {% else %}
+
+            <!-- STATUS -->
+
+            {% if booking.status == "cancelled" %}
 
 
-            <div class="booking-status completed">
+                <div class="booking-status cancelled">
 
-                <span></span>
+                    <span></span>
 
-                Completed
+                    Cancelled
 
-            </div>
-
-
-        {% endif %}
+                </div>
 
 
-    </article>
+            {% else %}
 
 
-    {% empty %}
+                <div class="booking-status completed">
+
+                    <span></span>
+
+                    Completed
+
+                </div>
+
+
+            {% endif %}
+
+
+
+            <!-- DELETE -->
+
+            <button
+                type="button"
+                class="history-delete-button"
+                data-booking-id="{{ booking.id }}"
+                title="Delete history"
+            >
+
+                <i class="fa-solid fa-trash"></i>
+
+            </button>
+
+
+        </article>
+
+
+        {% endfor %}
+
+
+    </div>
+
+
+    {% else %}
 
 
     <div class="history-empty">
@@ -561,10 +660,429 @@
     </div>
 
 
-    {% endfor %}
+    {% endif %}
 
 
 </section>
 
 
+<script>
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+
+        const selectAll =
+            document.getElementById(
+                "selectAllHistory"
+            );
+
+
+        const deleteSelected =
+            document.getElementById(
+                "deleteSelectedHistory"
+            );
+
+
+        const historyList =
+            document.getElementById(
+                "historyList"
+            );
+
+
+        const csrfToken =
+            document.querySelector(
+                "[name=csrfmiddlewaretoken]"
+            )?.value;
+
+
+
+        function getCheckboxes() {
+
+            return document.querySelectorAll(
+                ".history-checkbox"
+            );
+
+        }
+
+
+
+        function updateDeleteButton() {
+
+            const checkboxes =
+                getCheckboxes();
+
+
+            const checked =
+                document.querySelectorAll(
+                    ".history-checkbox:checked"
+                );
+
+
+            if (deleteSelected) {
+
+                deleteSelected.disabled =
+                    checked.length === 0;
+
+            }
+
+
+            if (selectAll) {
+
+                selectAll.checked =
+                    checkboxes.length > 0 &&
+                    checked.length === checkboxes.length;
+
+            }
+
+        }
+
+
+
+        /* =================================
+           SELECT ALL
+        ================================= */
+
+        if (selectAll) {
+
+            selectAll.addEventListener(
+                "change",
+                function () {
+
+
+                    getCheckboxes().forEach(
+                        function (checkbox) {
+
+                            checkbox.checked =
+                                selectAll.checked;
+
+                        }
+                    );
+
+
+                    updateDeleteButton();
+
+                }
+            );
+
+        }
+
+
+
+        /* =================================
+           INDIVIDUAL CHECKBOXES
+        ================================= */
+
+        document.addEventListener(
+            "change",
+            function (event) {
+
+
+                if (
+                    event.target.classList.contains(
+                        "history-checkbox"
+                    )
+                ) {
+
+                    updateDeleteButton();
+
+                }
+
+            }
+        );
+
+
+
+        /* =================================
+           DELETE ONE
+        ================================= */
+
+        document.addEventListener(
+            "click",
+            function (event) {
+
+
+                const button =
+                    event.target.closest(
+                        ".history-delete-button"
+                    );
+
+
+                if (!button) {
+
+                    return;
+
+                }
+
+
+                const bookingId =
+                    button.dataset.bookingId;
+
+
+                deleteHistory(
+                    [bookingId],
+                    button.closest(
+                        ".history-card"
+                    )
+                );
+
+            }
+        );
+
+
+
+        /* =================================
+           DELETE SELECTED
+        ================================= */
+
+        if (deleteSelected) {
+
+            deleteSelected.addEventListener(
+                "click",
+                function () {
+
+
+                    const checked =
+                        document.querySelectorAll(
+                            ".history-checkbox:checked"
+                        );
+
+
+                    const bookingIds =
+                        Array.from(
+                            checked
+                        ).map(
+                            function (checkbox) {
+
+                                return checkbox.value;
+
+                            }
+                        );
+
+
+                    if (
+                        bookingIds.length === 0
+                    ) {
+
+                        return;
+
+                    }
+
+
+                    const cards =
+                        Array.from(
+                            checked
+                        ).map(
+                            function (checkbox) {
+
+                                return checkbox.closest(
+                                    ".history-card"
+                                );
+
+                            }
+                        );
+
+
+                    deleteHistory(
+                        bookingIds,
+                        cards
+                    );
+
+                }
+            );
+
+        }
+
+
+
+        /* =================================
+           DELETE FUNCTION
+        ================================= */
+
+        function deleteHistory(
+            bookingIds,
+            cards
+        ) {
+
+
+            const message =
+                bookingIds.length === 1
+                    ? "Delete this appointment history?"
+                    : "Delete the selected appointment history?";
+
+
+            if (!confirm(message)) {
+
+                return;
+
+            }
+
+
+
+            const formData =
+                new FormData();
+
+
+            bookingIds.forEach(
+                function (id) {
+
+                    formData.append(
+                        "booking_ids",
+                        id
+                    );
+
+                }
+            );
+
+
+            formData.append(
+                "csrfmiddlewaretoken",
+                csrfToken
+            );
+
+
+
+            fetch(
+                "{% url 'delete_booking_history' %}",
+                {
+                    method: "POST",
+
+                    body: formData,
+
+                    headers: {
+                        "X-Requested-With":
+                            "XMLHttpRequest"
+                    }
+                }
+            )
+
+            .then(
+                function (response) {
+
+                    return response.json();
+
+                }
+            )
+
+            .then(
+                function (data) {
+
+
+                    if (!data.success) {
+
+                        alert(
+                            data.message ||
+                            "Unable to delete history."
+                        );
+
+                        return;
+
+                    }
+
+
+
+                    /* =========================
+                       REMOVE CARDS
+                    ========================= */
+
+                    if (Array.isArray(cards)) {
+
+                        cards.forEach(
+                            function (card) {
+
+                                if (card) {
+
+                                    card.remove();
+
+                                }
+
+                            }
+                        );
+
+                    }
+                    else {
+
+                        if (cards) {
+
+                            cards.remove();
+
+                        }
+
+                    }
+
+
+
+                    updateDeleteButton();
+
+
+
+                    /* =========================
+                       EMPTY STATE
+                    ========================= */
+
+                    const remainingCards =
+                        document.querySelectorAll(
+                            ".history-card"
+                        );
+
+
+                    if (
+                        remainingCards.length === 0 &&
+                        historyList
+                    ) {
+
+
+                        historyList.innerHTML = `
+
+                            <div class="history-empty">
+
+                                <i class="fa-solid fa-clock-rotate-left"></i>
+
+                                <span>
+                                    No previous appointments
+                                </span>
+
+                            </div>
+
+                        `;
+
+
+                        if (selectAll) {
+
+                            selectAll.checked =
+                                false;
+
+                        }
+
+
+                        if (deleteSelected) {
+
+                            deleteSelected.disabled =
+                                true;
+
+                        }
+
+                    }
+
+                }
+            )
+
+            .catch(
+                function () {
+
+                    alert(
+                        "Something went wrong while deleting the history."
+                    );
+
+                }
+            );
+
+        }
+
+
+    }
+);
+
+</script>
 {% endblock %}
