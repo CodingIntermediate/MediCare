@@ -214,8 +214,10 @@ class Consultation(models.Model):
         blank=True
     )
 
-    ai_analysis = models.TextField(
-        blank=True
+    ai_analysis = models.JSONField(
+        blank=True,
+        null=True,
+        default=dict
     )
 
     status = models.CharField(

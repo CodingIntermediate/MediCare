@@ -10408,3 +10408,682 @@ body {
     }
 
 }
+
+/* =========================================
+   PATIENT PRESCRIPTIONS
+========================================= */
+
+.patient-prescriptions {
+
+    animation:
+        fadeUp 0.5s ease both;
+
+}
+
+
+.patient-prescription-card {
+
+    padding: 24px;
+
+    margin-bottom: 18px;
+
+}
+
+
+.patient-prescription-header {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 15px;
+
+    margin-bottom: 22px;
+
+}
+
+
+.patient-prescription-doctor {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 13px;
+
+}
+
+
+.patient-prescription-avatar {
+
+    width: 48px;
+
+    height: 48px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 14px;
+
+    color: white;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--primary),
+            var(--primary-light)
+        );
+
+    font-size: 17px;
+
+    box-shadow:
+        0 8px 18px rgba(91, 95, 234, 0.16);
+
+}
+
+
+.patient-prescription-doctor span {
+
+    display: block;
+
+    color: var(--primary);
+
+    font-size: 8px;
+
+    font-weight: 700;
+
+    letter-spacing: 1.4px;
+
+}
+
+
+.patient-prescription-doctor h2 {
+
+    margin-top: 3px;
+
+    font-family: "Outfit", sans-serif;
+
+    font-size: 18px;
+
+}
+
+
+.patient-prescription-doctor p {
+
+    margin-top: 3px;
+
+    color: var(--muted);
+
+    font-size: 9px;
+
+}
+
+
+.patient-prescription-date {
+
+    color: var(--muted);
+
+    font-size: 9px;
+
+    text-align: right;
+
+}
+
+
+/* =========================================
+   PRESCRIPTION META
+========================================= */
+
+.patient-prescription-meta {
+
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 10px;
+
+    margin-bottom: 18px;
+
+}
+
+
+.patient-prescription-meta-item {
+
+    padding: 12px 14px;
+
+    border:
+        1px solid rgba(100, 100, 120, 0.10);
+
+    border-radius: 12px;
+
+    background:
+        rgba(255, 255, 255, 0.25);
+
+}
+
+
+.patient-prescription-meta-item span {
+
+    display: block;
+
+    color: var(--muted);
+
+    font-size: 7px;
+
+    font-weight: 700;
+
+    letter-spacing: 1px;
+
+}
+
+
+.patient-prescription-meta-item strong {
+
+    display: block;
+
+    margin-top: 4px;
+
+    color: var(--text);
+
+    font-family: "Outfit", sans-serif;
+
+    font-size: 11px;
+
+}
+
+
+/* =========================================
+   PRESCRIPTION SECTIONS
+========================================= */
+
+.patient-prescription-section {
+
+    margin-top: 18px;
+
+    padding-top: 18px;
+
+    border-top:
+        1px solid rgba(100, 100, 120, 0.10);
+
+}
+
+
+.patient-prescription-section-heading {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    margin-bottom: 10px;
+
+}
+
+
+.patient-prescription-section-icon {
+
+    width: 32px;
+
+    height: 32px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 10px;
+
+    color: var(--primary);
+
+    background:
+        rgba(91, 95, 234, 0.08);
+
+}
+
+
+.patient-prescription-section-heading h3 {
+
+    font-family: "Outfit", sans-serif;
+
+    font-size: 14px;
+
+}
+
+
+.patient-prescription-text {
+
+    color: var(--text);
+
+    font-size: 11px;
+
+    line-height: 1.7;
+
+    white-space: pre-line;
+
+}
+
+
+/* =========================================
+   FOLLOW-UP
+========================================= */
+
+.patient-prescription-followup {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    margin-top: 18px;
+
+    padding: 13px 15px;
+
+    border-radius: 12px;
+
+    color: var(--primary);
+
+    background:
+        rgba(91, 95, 234, 0.06);
+
+    border:
+        1px solid rgba(91, 95, 234, 0.10);
+
+}
+
+
+.patient-prescription-followup i {
+
+    font-size: 15px;
+
+}
+
+
+.patient-prescription-followup span {
+
+    display: block;
+
+    color: var(--muted);
+
+    font-size: 7px;
+
+    font-weight: 700;
+
+    letter-spacing: 1px;
+
+}
+
+
+.patient-prescription-followup strong {
+
+    display: block;
+
+    margin-top: 2px;
+
+    color: var(--text);
+
+    font-family: "Outfit", sans-serif;
+
+    font-size: 11px;
+
+}
+
+
+/* =========================================
+   EMPTY STATE
+========================================= */
+
+.patient-prescriptions-empty {
+
+    padding: 45px 25px;
+
+    text-align: center;
+
+}
+
+
+.patient-prescriptions-empty-icon {
+
+    width: 58px;
+
+    height: 58px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    margin: 0 auto 15px;
+
+    border-radius: 17px;
+
+    color: var(--primary);
+
+    background:
+        rgba(91, 95, 234, 0.08);
+
+    font-size: 21px;
+
+}
+
+
+.patient-prescriptions-empty h2 {
+
+    font-family: "Outfit", sans-serif;
+
+    font-size: 20px;
+
+}
+
+
+.patient-prescriptions-empty p {
+
+    max-width: 400px;
+
+    margin: 7px auto 0;
+
+    color: var(--muted);
+
+    font-size: 10px;
+
+    line-height: 1.6;
+
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 600px) {
+
+    .patient-prescription-header {
+
+        align-items: flex-start;
+
+        flex-direction: column;
+
+    }
+
+
+    .patient-prescription-date {
+
+        text-align: left;
+
+    }
+
+
+    .patient-prescription-meta {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+}
+
+/* =========================================
+   AI CLINICAL ANALYSIS
+========================================= */
+
+.consultation-ai-card {
+
+    margin-top: 18px;
+
+    padding: 26px;
+
+    animation:
+        fadeUp 0.5s ease both;
+
+}
+
+
+.consultation-ai-card .consultation-card-heading {
+
+    margin-bottom: 20px;
+
+}
+
+
+.consultation-ai-card .consultation-card-icon {
+
+    background:
+        rgba(91, 95, 234, 0.10);
+
+}
+
+
+.consultation-ai-result {
+
+    padding: 20px;
+
+    border:
+        1px solid rgba(91, 95, 234, 0.10);
+
+    border-radius: 15px;
+
+    color: var(--text);
+
+    background:
+        rgba(91, 95, 234, 0.035);
+
+    font-size: 11px;
+
+    line-height: 1.8;
+
+}
+
+
+.consultation-ai-result p {
+
+    margin-bottom: 10px;
+
+}
+
+
+@media (max-width: 600px) {
+
+    .consultation-ai-card {
+
+        padding: 20px;
+
+    }
+
+
+    .consultation-ai-result {
+
+        padding: 15px;
+
+    }
+
+}
+
+/* =========================================
+   AI ANALYSIS SECTIONS
+========================================= */
+
+.ai-analysis-section {
+
+    padding: 18px 0;
+
+    border-bottom:
+        1px solid rgba(100, 100, 120, 0.09);
+
+}
+
+
+.ai-analysis-section:last-of-type {
+
+    border-bottom: none;
+
+}
+
+
+.ai-analysis-section-heading {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    margin-bottom: 10px;
+
+}
+
+
+.ai-analysis-icon {
+
+    width: 34px;
+
+    height: 34px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 10px;
+
+    color: var(--primary);
+
+    background:
+        rgba(91, 95, 234, 0.08);
+
+}
+
+
+.ai-analysis-icon.warning {
+
+    color: #d97706;
+
+    background:
+        rgba(245, 158, 11, 0.10);
+
+}
+
+
+.ai-analysis-section-heading h3 {
+
+    font-family: "Outfit", sans-serif;
+
+    font-size: 14px;
+
+}
+
+
+.ai-analysis-section p {
+
+    color: var(--text);
+
+    font-size: 11px;
+
+    line-height: 1.7;
+
+}
+
+
+.ai-analysis-section ul {
+
+    margin: 0;
+
+    padding-left: 18px;
+
+}
+
+
+.ai-analysis-section li {
+
+    margin-bottom: 7px;
+
+    color: var(--text);
+
+    font-size: 11px;
+
+    line-height: 1.6;
+
+}
+
+
+.ai-analysis-safety {
+
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 11px;
+
+    margin-top: 18px;
+
+    padding: 14px 16px;
+
+    border-radius: 12px;
+
+    background:
+        rgba(91, 95, 234, 0.05);
+
+    border:
+        1px solid rgba(91, 95, 234, 0.09);
+
+}
+
+
+.ai-analysis-safety > i {
+
+    margin-top: 2px;
+
+    color: var(--primary);
+
+}
+
+
+.ai-analysis-safety strong {
+
+    display: block;
+
+    font-family: "Outfit", sans-serif;
+
+    font-size: 11px;
+
+}
+
+
+.ai-analysis-safety p {
+
+    margin-top: 4px;
+
+    color: var(--muted);
+
+    font-size: 9px;
+
+    line-height: 1.5;
+
+}
+
+
+@media (max-width: 600px) {
+
+    .ai-analysis-section {
+
+        padding: 15px 0;
+
+    }
+
+
+    .ai-analysis-section-heading h3 {
+
+        font-size: 13px;
+
+    }
+
+}

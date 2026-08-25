@@ -1,0 +1,349 @@
+{% extends "consultancy/base.html" %}
+
+
+{% block title %}
+    My Prescriptions
+{% endblock %}
+
+
+{% block navigation %}
+
+<a href="{% url 'patient_dashboard' %}">
+    <i class="fa-solid fa-house"></i>
+    <span>Dashboard</span>
+</a>
+
+
+<a href="{% url 'doctor_categories' %}">
+    <i class="fa-solid fa-user-doctor"></i>
+    <span>Find a Doctor</span>
+</a>
+
+
+<a href="{% url 'my_bookings' %}">
+    <i class="fa-solid fa-calendar-check"></i>
+    <span>My Bookings</span>
+</a>
+
+<a
+    class="active"
+    href="{% url 'my_prescriptions' %}"
+>
+
+    <i class="fa-solid fa-prescription-bottle-medical"></i>
+
+    <span>
+        My Prescriptions
+    </span>
+
+</a>
+<a href="{% url 'patient_profile' %}">
+    <i class="fa-solid fa-user"></i>
+    <span>My Profile</span>
+</a>
+
+{% endblock %}
+
+
+{% block navigation_bottom %}
+
+<a href="{% url 'patient_logout' %}">
+    <i class="fa-solid fa-right-from-bracket"></i>
+    <span>Logout</span>
+</a>
+
+{% endblock %}
+
+
+{% block header %}
+
+<div class="user-area">
+
+    <div class="user-avatar">
+
+        {{ patient.user.name|first|upper }}
+
+    </div>
+
+    <span class="user-name">
+
+        {{ patient.user.name }}
+
+    </span>
+
+</div>
+
+{% endblock %}
+
+
+{% block content %}
+
+
+<div class="patient-prescriptions">
+
+
+    <section class="page-heading">
+
+        <span class="heading-label">
+            MEDICAL RECORDS
+        </span>
+
+        <h1>
+            My Prescriptions
+        </h1>
+
+        <p>
+            View prescriptions provided by your doctors.
+        </p>
+
+    </section>
+
+
+    {% for prescription in prescriptions %}
+
+
+    <article class="glass patient-prescription-card">
+
+
+        <div class="patient-prescription-header">
+
+
+            <div class="patient-prescription-doctor">
+
+
+                <div class="patient-prescription-avatar">
+
+                    <i class="fa-solid fa-user-doctor"></i>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        PRESCRIBED BY
+                    </span>
+
+                    <h2>
+
+                        Dr.
+                        {{ prescription.consultation.booking.doctor.user.name }}
+
+                    </h2>
+
+                    <p>
+
+                        {{ prescription.created_at|date:"d M Y" }}
+
+                    </p>
+
+                </div>
+
+
+            </div>
+
+
+            <div class="patient-prescription-date">
+
+                Prescription
+
+            </div>
+
+
+        </div>
+
+
+
+        <div class="patient-prescription-meta">
+
+
+            <div class="patient-prescription-meta-item">
+
+                <span>
+                    BOOKING ID
+                </span>
+
+                <strong>
+                    {{ prescription.consultation.booking.booking_id }}
+                </strong>
+
+            </div>
+
+
+            <div class="patient-prescription-meta-item">
+
+                <span>
+                    TOKEN
+                </span>
+
+                <strong>
+                    #{{ prescription.consultation.booking.token_id }}
+                </strong>
+
+            </div>
+
+
+        </div>
+
+
+
+        <div class="patient-prescription-section">
+
+
+            <div class="patient-prescription-section-heading">
+
+                <div class="patient-prescription-section-icon">
+
+                    <i class="fa-solid fa-pills"></i>
+
+                </div>
+
+
+                <h3>
+                    Medicines
+                </h3>
+
+            </div>
+
+
+            <div class="patient-prescription-text">
+
+                {{ prescription.medicines|default:"No medicines prescribed." }}
+
+            </div>
+
+
+        </div>
+
+
+
+        <div class="patient-prescription-section">
+
+
+            <div class="patient-prescription-section-heading">
+
+                <div class="patient-prescription-section-icon">
+
+                    <i class="fa-solid fa-clipboard-list"></i>
+
+                </div>
+
+
+                <h3>
+                    Instructions
+                </h3>
+
+            </div>
+
+
+            <div class="patient-prescription-text">
+
+                {{ prescription.instructions|default:"No additional instructions." }}
+
+            </div>
+
+
+        </div>
+
+
+
+        {% if prescription.notes %}
+
+
+        <div class="patient-prescription-section">
+
+
+            <div class="patient-prescription-section-heading">
+
+                <div class="patient-prescription-section-icon">
+
+                    <i class="fa-solid fa-note-sticky"></i>
+
+                </div>
+
+
+                <h3>
+                    Additional Notes
+                </h3>
+
+            </div>
+
+
+            <div class="patient-prescription-text">
+
+                {{ prescription.notes }}
+
+            </div>
+
+
+        </div>
+
+
+        {% endif %}
+
+
+
+        {% if prescription.follow_up_date %}
+
+
+        <div class="patient-prescription-followup">
+
+
+            <i class="fa-solid fa-calendar-check"></i>
+
+
+            <div>
+
+                <span>
+                    FOLLOW-UP DATE
+                </span>
+
+                <strong>
+                    {{ prescription.follow_up_date|date:"d M Y" }}
+                </strong>
+
+            </div>
+
+
+        </div>
+
+
+        {% endif %}
+
+
+    </article>
+
+
+    {% empty %}
+
+
+    <section class="glass patient-prescriptions-empty">
+
+
+        <div class="patient-prescriptions-empty-icon">
+
+            <i class="fa-solid fa-prescription-bottle-medical"></i>
+
+        </div>
+
+
+        <h2>
+            No prescriptions yet
+        </h2>
+
+
+        <p>
+            Your prescriptions will appear here
+            after your doctor completes a consultation.
+        </p>
+
+
+    </section>
+
+
+    {% endfor %}
+
+
+</div>
+
+{% endblock %}

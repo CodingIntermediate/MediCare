@@ -130,5 +130,14 @@ path(
     create_prescription,
     name="create_prescription"
 ),
-
+path(
+    "my-prescriptions/",
+    my_prescriptions,
+    name="my_prescriptions"
+),
+path(
+    "doctor/consultation/<int:consultation_id>/analyze/",
+    analyze_consultation,
+    name="analyze_consultation"
+),
 ]

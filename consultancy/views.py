@@ -1,3 +1,4 @@
+import json
 from django.shortcuts import render, redirect
 from django.contrib.auth.hashers import *
 from .forms import *
@@ -6,6 +7,8 @@ from datetime import datetime, timedelta
 from django.http import HttpResponse
 from django.utils import timezone
 from django.http import JsonResponse
+from google import genai
+from django.conf import settings
 
 
 def home(request):
@@ -400,7 +403,7 @@ def doctor_availability(request):
                         ).time()
 
                         end_time = datetime.strptime(
-                            "21:20",
+                            "20:20",
                             "%H:%M"
                         ).time()
 
@@ -991,6 +994,8 @@ def patient_profile(request):
     )
     
     
+    
+    
 def doctor_patient_profile(request, patient_id, booking_id):
 
     user_id = request.session.get("user_id")
@@ -1025,6 +1030,8 @@ def doctor_patient_profile(request, patient_id, booking_id):
             "booking": booking
         }
     )
+    
+    
     
 def start_consultation(request, booking_id):
 
@@ -1171,4 +1178,165 @@ def create_prescription(request, consultation_id):
             "consultation": consultation,
             "prescription": prescription
         }
+    )
+    
+    
+def my_prescriptions(request):
+
+    user_id = request.session.get("user_id")
+
+    if not user_id:
+        return redirect("patient_login")
+
+    user = User.objects.get(
+        id=user_id,
+        role="patient"
+    )
+
+    patient = Patient.objects.get(
+        user=user
+    )
+
+    prescriptions = Prescription.objects.filter(
+        consultation__booking__patient=patient
+    ).select_related(
+        "consultation",
+        "consultation__booking",
+        "consultation__booking__doctor",
+        "consultation__booking__doctor__user"
+    ).order_by(
+        "-created_at"
+    )
+
+    return render(
+        request,
+        "consultancy/my_prescriptions.html",
+        {
+            "patient": patient,
+            "prescriptions": prescriptions
+        }
+    )
+    
+def analyze_consultation(request, consultation_id):
+
+    user_id = request.session.get("user_id")
+
+    if not user_id:
+        return redirect("doctor_login")
+
+    user = User.objects.get(
+        id=user_id,
+        role="doctor"
+    )
+
+    doctor = Doctor.objects.get(
+        user=user
+    )
+
+    consultation = Consultation.objects.get(
+        id=consultation_id,
+        booking__doctor=doctor
+    )
+
+    patient = consultation.booking.patient
+
+    profile = patient.profile
+
+    # --------------------------------
+    # Temporary AI analysis
+    # --------------------------------
+
+    client = genai.Client(
+    api_key=settings.GEMINI_API_KEY
+    )
+
+
+    prompt = f"""
+    You are an AI clinical decision-support assistant helping a doctor.
+
+    Analyze the patient information and current consultation.
+
+    IMPORTANT:
+    - Do not prescribe medicines.
+    - Do not replace the doctor's judgment.
+    - Do not make a definitive diagnosis.
+    - Keep the analysis concise.
+    - Only use information provided below.
+    - Do not invent missing patient information.
+    - Also use emojis for better understanding
+
+    PATIENT INFORMATION
+
+    Name: {patient.user.name}
+    Date of Birth: {profile.date_of_birth}
+    Gender: {profile.gender}
+    Height: {profile.height} cm
+    Weight: {profile.weight} kg
+    BMI: {profile.bmi}
+    Blood Group: {profile.blood_group}
+    Allergies: {profile.allergies}
+    Existing Conditions: {profile.existing_conditions}
+    Current Medications: {profile.current_medications}
+
+    CONSULTATION
+
+    Symptoms:
+    {consultation.symptoms}
+
+    Doctor Notes:
+    {consultation.doctor_notes}
+
+    Doctor Diagnosis:
+    {consultation.diagnosis}
+
+    Return ONLY valid JSON.
+
+    Use exactly this structure:
+
+    {{
+        "patient_summary": "1-2 short sentences",
+        "key_concerns": [
+            "concern 1",
+            "concern 2",
+            "concern 3"
+        ],
+        "relevant_history": [
+            "relevant point 1",
+            "relevant point 2",
+            "relevant point 3"
+        ],
+        "doctor_review": [
+            "review point 1",
+            "review point 2",
+            "review point 3"
+        ],
+        "safety_note": "AI-generated clinical decision support. Final clinical decisions must be made by the doctor."
+    }}
+
+    Rules:
+    - Maximum 3 items in each list.
+    - Keep each item short.
+    - If information is unavailable, use an empty list.
+    - Do not use Markdown.
+    - Do not add ```json.
+    - Return JSON only.
+    """
+
+
+    response = client.models.generate_content(
+        model="gemini-3.6-flash",
+        contents=prompt
+    )
+
+    analysis = json.loads(
+    response.text
+    )
+
+    consultation.ai_analysis = analysis
+
+    consultation.save()
+
+    return redirect(
+        "start_consultation",
+        booking_id=consultation.booking.id
     )

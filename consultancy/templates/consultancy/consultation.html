@@ -358,7 +358,20 @@
         Save Consultation
 
     </button>
+    {% if consultation.status == "completed" %}
 
+<a
+    href="{% url 'analyze_consultation' consultation.id %}"
+    class="doctor-primary-button"
+>
+
+    <i class="fa-solid fa-brain"></i>
+
+    Analyze with AI
+
+</a>
+
+{% endif %}
 
     {% if consultation.status == "completed" %}
 
@@ -381,5 +394,216 @@
 
 </form>
 
+{% if consultation.ai_analysis %}
 
+<section class="consultation-ai-card glass">
+
+    <div class="consultation-card-heading">
+
+        <div class="consultation-card-icon">
+
+            <i class="fa-solid fa-brain"></i>
+
+        </div>
+
+        <div>
+
+            <span>
+                AI CLINICAL SUPPORT
+            </span>
+
+            <h2>
+                Analysis
+            </h2>
+
+            <p>
+                Review this information before making clinical decisions.
+            </p>
+
+        </div>
+
+    </div>
+
+
+<div class="consultation-ai-result">
+
+
+    <!-- PATIENT SUMMARY -->
+
+    <div class="ai-analysis-section">
+
+        <div class="ai-analysis-section-heading">
+
+            <div class="ai-analysis-icon">
+
+                <i class="fa-solid fa-user"></i>
+
+            </div>
+
+            <h3>
+                Patient Summary
+            </h3>
+
+        </div>
+
+
+        <p>
+
+            {{ consultation.ai_analysis.patient_summary }}
+
+        </p>
+
+    </div>
+
+
+
+    <!-- KEY CONCERNS -->
+
+    <div class="ai-analysis-section">
+
+        <div class="ai-analysis-section-heading">
+
+            <div class="ai-analysis-icon warning">
+
+                <i class="fa-solid fa-triangle-exclamation"></i>
+
+            </div>
+
+            <h3>
+                Key Concerns
+            </h3>
+
+        </div>
+
+
+        <ul>
+
+            {% for concern in consultation.ai_analysis.key_concerns %}
+
+                <li>
+                    {{ concern }}
+                </li>
+
+            {% empty %}
+
+                <li>
+                    No key concerns identified.
+                </li>
+
+            {% endfor %}
+
+        </ul>
+
+    </div>
+
+
+
+    <!-- RELEVANT HISTORY -->
+
+    <div class="ai-analysis-section">
+
+        <div class="ai-analysis-section-heading">
+
+            <div class="ai-analysis-icon">
+
+                <i class="fa-solid fa-notes-medical"></i>
+
+            </div>
+
+            <h3>
+                Relevant History
+            </h3>
+
+        </div>
+
+
+        <ul>
+
+            {% for history in consultation.ai_analysis.relevant_history %}
+
+                <li>
+                    {{ history }}
+                </li>
+
+            {% empty %}
+
+                <li>
+                    No relevant history available.
+                </li>
+
+            {% endfor %}
+
+        </ul>
+
+    </div>
+
+
+
+    <!-- DOCTOR REVIEW -->
+
+    <div class="ai-analysis-section">
+
+        <div class="ai-analysis-section-heading">
+
+            <div class="ai-analysis-icon">
+
+                <i class="fa-solid fa-user-doctor"></i>
+
+            </div>
+
+            <h3>
+                Doctor Review
+            </h3>
+
+        </div>
+
+
+        <ul>
+
+            {% for point in consultation.ai_analysis.doctor_review %}
+
+                <li>
+                    {{ point }}
+                </li>
+
+            {% empty %}
+
+                <li>
+                    No additional review points.
+                </li>
+
+            {% endfor %}
+
+        </ul>
+
+    </div>
+
+
+
+    <!-- SAFETY NOTE -->
+
+    <div class="ai-analysis-safety">
+
+        <i class="fa-solid fa-shield-halved"></i>
+
+        <div>
+
+            <strong>
+                AI Safety Note
+            </strong>
+
+            <p>
+                {{ consultation.ai_analysis.safety_note }}
+            </p>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+</section>
+
+{% endif %}
 {% endblock %}
