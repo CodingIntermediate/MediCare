@@ -42,6 +42,9 @@ ALLOWED_HOSTS = [
     "medicare-n18d.onrender.com",
 ]
 
+CSRF_TRUSTED_ORIGINS = [
+    "https://medicare-n18d.onrender.com",
+]
 
 
 OPENAI_API_KEY = os.getenv(
