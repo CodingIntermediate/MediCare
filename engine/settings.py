@@ -36,10 +36,11 @@ DEBUG = os.getenv(
     "True"
 ).lower() == "true"
 
-ALLOWED_HOSTS = os.getenv(
-    "ALLOWED_HOSTS",
-    "127.0.0.1,localhost"
-).split(",")
+ALLOWED_HOSTS = [
+    "127.0.0.1",
+    "localhost",
+    "medicare-n18d.onrender.com",
+]
 
 
 
@@ -52,7 +53,6 @@ GEMINI_API_KEY = os.getenv(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
 
 
 # Application definition
