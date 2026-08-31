@@ -712,14 +712,42 @@ def my_bookings(request):
     )
 
 
-    upcoming_bookings = bookings.filter(
-        status="confirmed"
-    )
+    today = timezone.localdate()
+
+    now = timezone.localtime()
 
 
-    past_bookings = bookings.exclude(
-        status="confirmed"
-    )
+    upcoming_bookings = []
+
+    past_bookings = []
+
+
+    for booking in bookings:
+
+        slot_datetime = datetime.combine(
+            booking.slot.date,
+            booking.slot.start_time
+        )
+
+        slot_datetime = timezone.make_aware(
+            slot_datetime
+        )
+
+
+        if (
+            booking.status == "confirmed"
+            and slot_datetime > now
+        ):
+
+            upcoming_bookings.append(
+                booking
+            )
+
+        else:
+
+            past_bookings.append(
+                booking
+            )
 
 
     return render(
@@ -729,7 +757,7 @@ def my_bookings(request):
             "upcoming_bookings": upcoming_bookings,
             "past_bookings": past_bookings
         }
-    )    
+    )   
     
     
 def cancel_booking(request, booking_id):
